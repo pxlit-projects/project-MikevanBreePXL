@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -19,8 +20,13 @@ public class PostController {
     private final IPostService postService;
 
     @GetMapping
-    public ResponseEntity<List<PostResponse>> getPublishedPosts() {
-        List<PostResponse> posts = postService.getPublishedPosts();
+    public ResponseEntity<List<PostResponse>> getPublishedPosts(
+            @RequestParam(required = false) LocalDateTime from,
+            @RequestParam(required = false) LocalDateTime to,
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) String content
+    ) {
+        List<PostResponse> posts = postService.getPublishedPosts(from, to, author, content);
         return ResponseEntity.ok(posts);
     }
 
