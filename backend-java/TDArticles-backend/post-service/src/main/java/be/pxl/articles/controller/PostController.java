@@ -3,6 +3,7 @@ package be.pxl.articles.controller;
 import be.pxl.articles.domain.api.CreatePostRequest;
 import be.pxl.articles.domain.api.PostResponse;
 import be.pxl.articles.service.IPostService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Void> createPost(@RequestBody CreatePostRequest request) {
+    public ResponseEntity<Void> createPost(@Valid @RequestBody CreatePostRequest request) {
         long createdPostId = postService.createPost(request);
         return ResponseEntity.created(URI.create("/posts/" + createdPostId)).build();
     }

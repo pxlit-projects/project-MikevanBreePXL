@@ -31,11 +31,11 @@ public class PostService implements IPostService {
 
     @Override
     public long createPost(CreatePostRequest request) {
-        Post newPost = new Post(
-                request.title(),
-                request.content(),
-                request.author()
-        );
+        Post newPost = Post.builder()
+                        .title(request.getTitle())
+                        .content(request.getContent())
+                        .author(request.getAuthor())
+                        .build();
         return postRepository.save(newPost).getId();
     }
 
