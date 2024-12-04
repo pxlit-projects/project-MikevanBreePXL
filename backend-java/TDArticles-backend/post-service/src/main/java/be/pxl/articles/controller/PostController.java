@@ -30,6 +30,12 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
 
+    @GetMapping("/author/{author}")
+    public ResponseEntity<List<PostResponse>> getPostsByAuthor(String author) {
+        List<PostResponse> posts = postService.getPostsByAuthor(author);
+        return ResponseEntity.ok(posts);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<PostResponse> getPost(@PathVariable long id) {
         PostResponse response = postService.getPost(id);

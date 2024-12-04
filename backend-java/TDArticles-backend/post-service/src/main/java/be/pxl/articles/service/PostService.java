@@ -49,6 +49,14 @@ public class PostService implements IPostService {
     }
 
     @Override
+    public List<PostResponse> getPostsByAuthor(String author) {
+        return postRepository.findAllByAuthor(author)
+                .stream()
+                .map(post -> mapToPostResponse(post))
+                .toList();
+    }
+
+    @Override
     public long createPost(CreatePostRequest request) {
         Post newPost = Post.builder()
                 .title(request.getTitle())
