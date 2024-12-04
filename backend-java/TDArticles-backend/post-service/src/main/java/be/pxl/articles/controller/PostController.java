@@ -1,6 +1,7 @@
 package be.pxl.articles.controller;
 
 import be.pxl.articles.domain.api.CreatePostRequest;
+import be.pxl.articles.domain.api.EditPostRequest;
 import be.pxl.articles.domain.api.PostResponse;
 import be.pxl.articles.service.IPostService;
 import jakarta.validation.Valid;
@@ -33,5 +34,11 @@ public class PostController {
     public ResponseEntity<Void> createPost(@Valid @RequestBody CreatePostRequest request) {
         long createdPostId = postService.createPost(request);
         return ResponseEntity.created(URI.create("/posts/" + createdPostId)).build();
+    }
+
+    @PutMapping("/{id}/edit")
+    public ResponseEntity<Void> editPost(@PathVariable long id, @Valid @RequestBody EditPostRequest request) {
+        postService.editPost(id, request);
+        return ResponseEntity.noContent().build();
     }
 }

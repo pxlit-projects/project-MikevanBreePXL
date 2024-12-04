@@ -2,6 +2,7 @@ package be.pxl.articles;
 
 import be.pxl.articles.domain.api.CreatePostRequest;
 import be.pxl.articles.repository.PostRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,9 +17,10 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -33,6 +35,7 @@ public class PostTests {
     private PostRepository postRepository;
     @Container
     private static final MariaDBContainer<?> mariaDbContainer = new MariaDBContainer<>("mariadb:latest");
+    private static CreatePostRequest createPostRequest;
 
     @DynamicPropertySource
     static void registerMySqlProperties(DynamicPropertyRegistry registry) {
@@ -41,13 +44,18 @@ public class PostTests {
         registry.add("spring.datasource.password", mariaDbContainer::getPassword);
     }
 
-    @Test
-    public void testCreatePost() throws Exception {
-        CreatePostRequest createPostRequest = CreatePostRequest.builder()
+    @BeforeEach
+    public void init() {
+        createPostRequest = CreatePostRequest.builder()
                 .title("Test Title")
                 .content("Test content lorem ipsum")
+                .concept(false)
                 .author("Auther The Testeth")
                 .build();
+    }
+
+    @Test
+    public void testCreatePost() throws Exception {
         String json = objectMapper.writeValueAsString(createPostRequest);
 
         int postCount = postRepository.findAll().size();
@@ -62,19 +70,43 @@ public class PostTests {
 
     @Test
     public void testGetPost() throws Exception {
-        CreatePostRequest createPostRequest = CreatePostRequest.builder()
-                .title("Test Title")
-                .content("Test content lorem ipsum")
-                .author("Auther The Testeth")
-                .build();
         String json = objectMapper.writeValueAsString(createPostRequest);
 
         MvcResult result = mockMvc.perform(post("/posts/create")
                 .contentType("application/json")
                 .content(json)).andReturn();
 
-        mockMvc.perform(get(result.getResponse().getRedirectedUrl())
+        mockMvc.perform(get(Objects.requireNonNull(result.getResponse().getRedirectedUrl()))
                 .contentType("application/json"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testEditPostWhenConcept() throws Exception {
+        createPostRequest.setConcept(true);
+        String json = objectMapper.writeValueAsString(createPostRequest);
+
+        MvcResult result = mockMvc.perform(post("/posts/create")
+                .contentType("application/json")
+                .content(json)).andReturn();
+
+        mockMvc.perform(put(result.getResponse().getRedirectedUrl() + "/edit")
+                .contentType("application/json")
+                .content(json))
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void testEditPostFailsWhenPublished() throws Exception {
+        String json = objectMapper.writeValueAsString(createPostRequest);
+
+        MvcResult result = mockMvc.perform(post("/posts/create")
+                .contentType("application/json")
+                .content(json)).andReturn();
+
+        mockMvc.perform(put(result.getResponse().getRedirectedUrl() + "/edit")
+                        .contentType("application/json")
+                        .content(json))
+                .andExpect(status().is4xxClientError());
     }
 }
