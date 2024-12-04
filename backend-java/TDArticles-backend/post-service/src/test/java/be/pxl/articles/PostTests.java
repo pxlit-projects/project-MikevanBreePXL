@@ -1,5 +1,6 @@
 package be.pxl.articles;
 
+import be.pxl.articles.domain.Post;
 import be.pxl.articles.domain.api.CreatePostRequest;
 import be.pxl.articles.repository.PostRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +21,7 @@ import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -79,6 +81,24 @@ public class PostTests {
         mockMvc.perform(get(Objects.requireNonNull(result.getResponse().getRedirectedUrl()))
                 .contentType("application/json"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetPublishedPosts() throws Exception {
+        String json = objectMapper.writeValueAsString(createPostRequest);
+
+        mockMvc.perform(post("/posts/create")
+                .contentType("application/json")
+                .content(json)).andReturn();
+
+
+        MvcResult result = mockMvc.perform(get("/posts")
+                .contentType("application/json"))
+                .andReturn();
+
+        Post[] posts = objectMapper.readValue(result.getResponse().getContentAsString(), Post[].class);
+
+        assertFalse(posts[0].isConcept());
     }
 
     @Test

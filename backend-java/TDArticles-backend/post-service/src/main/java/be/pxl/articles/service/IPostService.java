@@ -7,8 +7,8 @@ import be.pxl.articles.domain.api.PostResponse;
 import java.util.List;
 
 public interface IPostService {
+    List<PostResponse> getPublishedPosts();
     PostResponse getPost(long id);
-    List<PostResponse> getAllPosts();
     long createPost(CreatePostRequest request);
     void editPost(long id, EditPostRequest request);
 }

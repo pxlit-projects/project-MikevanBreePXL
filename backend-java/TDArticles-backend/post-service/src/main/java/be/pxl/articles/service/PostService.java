@@ -25,9 +25,10 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public List<PostResponse> getAllPosts() {
+    public List<PostResponse> getPublishedPosts() {
         return postRepository.findAll()
                 .stream()
+                .filter(post -> !post.isConcept())
                 .map(post -> mapToPostResponse(post))
                 .toList();
     }

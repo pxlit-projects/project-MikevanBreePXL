@@ -19,8 +19,8 @@ public class PostController {
     private final IPostService postService;
 
     @GetMapping
-    public ResponseEntity<List<PostResponse>> getPosts() {
-        List<PostResponse> posts = postService.getAllPosts();
+    public ResponseEntity<List<PostResponse>> getPublishedPosts() {
+        List<PostResponse> posts = postService.getPublishedPosts();
         return ResponseEntity.ok(posts);
     }
 
