@@ -97,13 +97,15 @@ public class PostTests {
     }
 
     @Test
-    public void testEditPostFailsWhenPublished() throws Exception {
+    public void testEditPostInConceptFailsWhenAlreadyPublished() throws Exception {
         String json = objectMapper.writeValueAsString(createPostRequest);
 
         MvcResult result = mockMvc.perform(post("/posts/create")
                 .contentType("application/json")
                 .content(json)).andReturn();
 
+        createPostRequest.setConcept(true);
+        json = objectMapper.writeValueAsString(createPostRequest);
         mockMvc.perform(put(result.getResponse().getRedirectedUrl() + "/edit")
                         .contentType("application/json")
                         .content(json))

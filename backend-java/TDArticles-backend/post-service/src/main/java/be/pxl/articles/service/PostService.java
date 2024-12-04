@@ -46,14 +46,16 @@ public class PostService implements IPostService {
     @Override
     public void editPost(long id, EditPostRequest request) {
         Post post = postRepository.findById(id).orElseThrow(() -> new PostNotFoundException("Could not find post with id " + id));
-        if (!post.isConcept()) {
-            throw new PostAlreadyPublishedException("The post with id " + id + " is already published (only concepts can be edited)");
+        if (!post.isConcept() && request.getConcept()) {
+            throw new PostAlreadyPublishedException("Post is already published and cannot be set to a concept");
         }
 
         post.setTitle(request.getTitle());
         post.setContent(request.getContent());
         post.setConcept(request.getConcept());
-        post.setCreationTime(LocalDateTime.now());
+        if (post.isConcept()) {
+            post.setCreationTime(LocalDateTime.now());
+        }
 
         postRepository.save(post);
     }
