@@ -2,3 +2,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html, body { height: 100%; }
+
+html {
+    background-color: #D0D0D0;
+}
+
+body {
+    margin: 0;
+    font-family: "Montserrat", "Helvetica Neue", sans-serif !important;
+}
