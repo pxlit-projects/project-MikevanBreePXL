@@ -1,8 +1,8 @@
 package be.pxl.articles.service;
 
-import be.pxl.articles.domain.api.CreatePostRequest;
-import be.pxl.articles.domain.api.EditPostRequest;
-import be.pxl.articles.domain.api.PostResponse;
+import be.pxl.articles.controller.request.CreatePostRequest;
+import be.pxl.articles.controller.request.EditPostRequest;
+import be.pxl.articles.controller.response.PostResponse;
 
 import java.time.LocalDateTime;
 import java.util.List;

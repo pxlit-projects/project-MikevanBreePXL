@@ -1,7 +1,7 @@
 package be.pxl.articles;
 
 import be.pxl.articles.domain.Post;
-import be.pxl.articles.domain.api.CreatePostRequest;
+import be.pxl.articles.controller.request.CreatePostRequest;
 import be.pxl.articles.repository.PostRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

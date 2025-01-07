@@ -1,4 +1,4 @@
-package be.pxl.articles.domain.api;
+package be.pxl.articles.controller.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -18,6 +19,7 @@ public class PostResponse {
     private String content;
     private String author;
     private Boolean concept;
+    private List<CommentResponse> comments;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime creationTime;
 }

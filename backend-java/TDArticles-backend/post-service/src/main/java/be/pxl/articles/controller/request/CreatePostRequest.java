@@ -1,4 +1,4 @@
-package be.pxl.articles.domain.api;
+package be.pxl.articles.controller.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;

@@ -1,4 +1,4 @@
-package be.pxl.articles.domain.api;
+package be.pxl.articles.controller.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

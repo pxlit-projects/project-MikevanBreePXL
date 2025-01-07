@@ -1,8 +1,9 @@
 package be.pxl.articles.controller;
 
-import be.pxl.articles.domain.api.CreatePostRequest;
-import be.pxl.articles.domain.api.EditPostRequest;
-import be.pxl.articles.domain.api.PostResponse;
+import be.pxl.articles.client.CommentClient;
+import be.pxl.articles.controller.request.CreatePostRequest;
+import be.pxl.articles.controller.request.EditPostRequest;
+import be.pxl.articles.controller.response.PostResponse;
 import be.pxl.articles.service.IPostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +16,10 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/posts")
+@RequestMapping("/")
 public class PostController {
     private final IPostService postService;
+    private final CommentClient commentClient;
 
     @GetMapping
     public ResponseEntity<List<PostResponse>> getPublishedPosts(
@@ -38,8 +40,10 @@ public class PostController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PostResponse> getPost(@PathVariable long id) {
-        PostResponse response = postService.getPost(id);
-        return ResponseEntity.ok(response);
+        PostResponse post = postService.getPost(id);
+        post.setComments(commentClient.getAllCommentsFromPost(id));
+
+        return ResponseEntity.ok(post);
     }
 
     @PostMapping("/create")
