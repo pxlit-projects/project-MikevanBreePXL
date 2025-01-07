@@ -8,11 +8,19 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: toor
       MYSQL_DATABASE: postservice_db
-  nextservice_db:
-    container_name: nextservice_db
+  reviewservice_db:
+    container_name: reviewservice_db
     image: mariadb:latest
     ports:
       - "3326:3306"
     environment:
       MYSQL_ROOT_PASSWORD: toor
-      MYSQL_DATABASE: nextservice_db
+      MYSQL_DATABASE: reviewservice_db
+  commentservice_db:
+    container_name: commentservice_db
+    image: mariadb:latest
+    ports:
+      - "3336:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: commentservice_db
