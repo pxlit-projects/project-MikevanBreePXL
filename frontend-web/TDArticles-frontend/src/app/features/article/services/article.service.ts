@@ -8,7 +8,7 @@ import { environment } from '@env/environment';
   providedIn: 'root'
 })
 export class ArticleService {
-  constructor(private http: HttpClient){ }
+  constructor(private http: HttpClient) {}
   
   fetchArticleById(articleId: number): Observable<Article> {
     return this.http.get<Article>(`${environment.apiArticleUrl}${articleId}`);
