@@ -1,12 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { environment } from '@env/environment';
 import { ArticleCreationFormComponent } from '../article-creation-form/article-creation-form.component';
 import { ConceptArticlesListComponent } from '../concept-articles-list/concept-articles-list.component';
-import { Article } from '../../../shared/models/article.model';
+import { Article } from '../../../../shared/models/article.model';
 import { BehaviorSubject } from 'rxjs';
+import { ArticleService } from '../../services/article.service';
 
 @Component({
   selector: 'app-create-article',
@@ -19,7 +18,7 @@ export class CreateArticleComponent implements OnDestroy {
   selectedArticle$ = this.selectedArticleSubject.asObservable();
 
   constructor(
-    private http: HttpClient,
+    private articleService: ArticleService,
     private router: Router
   ) {
     // Debug subscription
@@ -28,8 +27,8 @@ export class CreateArticleComponent implements OnDestroy {
     );
   }
 
-  createArticle(articleData: any): void {
-    this.http.post(`${environment.apiPostUrl}create`, articleData)
+  createArticle(articleData: Article): void {
+    this.articleService.createArticle(articleData)
       .subscribe({
         next: () => this.router.navigate(['/articles/']),
         error: (error) => console.error('Error creating article:', error)

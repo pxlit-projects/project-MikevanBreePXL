@@ -4,11 +4,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Article } from '../../../shared/models/article.model';
+import { Article } from '../../../../shared/models/article.model';
 import { environment } from '@env/environment'
-import { AuthService } from '../../auth/services/auth.service';
+import { AuthService } from '../../../auth/services/auth.service';
+import { ArticleService } from '../../services/article.service';
 
 interface FormErrorMessages {
   title: string;
@@ -48,8 +48,8 @@ export class ArticleCreationFormComponent {
 
   constructor(
     private fb: FormBuilder, 
-    private http: HttpClient,
     private router: Router,
+    private articleService: ArticleService,
     private authService: AuthService
   ) {
     this.articleForm = this.createForm();
@@ -133,7 +133,7 @@ export class ArticleCreationFormComponent {
       return;
     }
 
-    this.http.post(`${environment.apiPostUrl}create`, this.articleForm.value)
+    this.articleService.createArticle(this.articleForm.value)
       .subscribe({
         next: () => {
           this.router.navigate(['/article/']);

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { Article } from '../../../shared/models/article.model';
+import { Article } from '../../../../shared/models/article.model';
 
 @Component({
   selector: 'app-article-item',
