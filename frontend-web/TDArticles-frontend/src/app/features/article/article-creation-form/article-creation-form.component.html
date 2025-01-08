@@ -33,7 +33,7 @@
         [disabled]="articleForm.invalid">
         Create Article
         </button>
-        @if (selectedArticle) {
+        @if (isConceptLoaded) {
             <button mat-raised-button
             color="warn"
             (click)="cancelConcept()">

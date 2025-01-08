@@ -40,9 +40,11 @@ export class ArticleCreationFormComponent {
         author: article.author,
         concept: article.concept
       });
+      this.isConceptLoaded = true;
     }
   }
   @Output() submitArticle = new EventEmitter<Article>();
+  @Output() cancelConceptEdit = new EventEmitter<void>();
 
   constructor(
     private fb: FormBuilder, 
@@ -53,6 +55,7 @@ export class ArticleCreationFormComponent {
     this.articleForm = this.createForm();
   }
 
+  isConceptLoaded = false;
   articleForm: FormGroup;
   formErrors: FormErrorMessages = {
     title: '',
@@ -68,6 +71,11 @@ export class ArticleCreationFormComponent {
 
   ngOnInit(): void {
     this.subscribeToFormChanges();
+    
+    this.articleForm.patchValue({
+      author: this.authService.getCurrentUser()?.name,
+    });
+
     // Add form state debugging
     this.articleForm.statusChanges.subscribe(status => {
       console.log('Form Status:', status);
@@ -115,15 +123,12 @@ export class ArticleCreationFormComponent {
   }
   
   cancelConcept() {
-    this.selectedArticle = null;
+    this.isConceptLoaded = false;
     this.articleForm.reset();
+    this.cancelConceptEdit.emit();
   }
 
   onSubmit(): void {
-    this.articleForm.patchValue({
-      author: this.authService.getCurrentUser()?.name,
-    });
-
     if (!this.articleForm?.valid) {
       return;
     }
