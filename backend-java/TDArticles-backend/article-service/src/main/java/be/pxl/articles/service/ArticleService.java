@@ -29,7 +29,8 @@ public class ArticleService implements IArticleService {
     public List<ArticleResponse> getPublishedArticles(LocalDateTime from, LocalDateTime to, String author, String content) {
         Stream<Article> articleStream = articleRepository.findAll()
                 .stream()
-                .filter(article -> !article.isConcept());
+                .filter(article -> !article.isConcept())
+                .filter(article -> article.isPublished());
 
         if (from != null) {
             articleStream = articleStream.filter(article -> article.getCreationTime().isAfter(from));
@@ -45,6 +46,15 @@ public class ArticleService implements IArticleService {
         }
 
         return articleStream.map(article -> mapToArticleResponse(article))
+                .toList();
+    }
+
+    @Override
+    public List<ArticleResponse> getPendingArticles() {
+        return articleRepository.findAll().stream()
+                .filter(article -> !article.isPublished())
+                .filter(article -> !article.isConcept())
+                .map(article -> mapToArticleResponse(article))
                 .toList();
     }
 
@@ -70,6 +80,7 @@ public class ArticleService implements IArticleService {
                 .content(request.getContent())
                 .author(request.getAuthor())
                 .concept(request.getConcept())
+                .published(false)
                 .creationTime(LocalDateTime.now())
                 .build();
         return articleRepository.save(newArticle).getId();

@@ -22,4 +22,5 @@ public class Article {
     private String author;
     private LocalDateTime creationTime;
     private boolean concept;
+    private boolean published;
 }

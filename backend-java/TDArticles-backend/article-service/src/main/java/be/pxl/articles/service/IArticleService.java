@@ -15,4 +15,6 @@ public interface IArticleService {
     void editArticle(long id, EditArticleRequest request);
 
     List<ArticleResponse> getConcepts(String author);
+
+    List<ArticleResponse> getPendingArticles();
 }
