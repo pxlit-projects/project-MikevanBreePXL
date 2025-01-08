@@ -22,7 +22,7 @@
         <developer/>
     </developers>
     <modules>
-        <module>post-service</module>
+        <module>article-service</module>
         <module>review-service</module>
         <module>comment-service</module>
         <module>discovery-service</module>

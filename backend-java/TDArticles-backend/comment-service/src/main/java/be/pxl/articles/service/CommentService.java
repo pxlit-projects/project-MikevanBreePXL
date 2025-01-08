@@ -17,8 +17,8 @@ import java.util.List;
 public class CommentService {
     private final CommentRepository commentRepository;
 
-    public List<CommentDisplayResponse> getAllCommentsFromPost(long postId) {
-        return commentRepository.findAllByPostId(postId).stream()
+    public List<CommentDisplayResponse> getAllCommentsFromArticle(long articleId) {
+        return commentRepository.findAllByArticleId(articleId).stream()
                 .map(this::createDisplayResponseFromEntity)
                 .toList();
     }
@@ -54,7 +54,7 @@ public class CommentService {
 
     private Comment createEntityFromSaveRequest(CommentSaveRequest commentSaveRequest) {
         return Comment.builder()
-                .postId(commentSaveRequest.getPostId())
+                .articleId(commentSaveRequest.getArticleId())
                 .comment(commentSaveRequest.getComment())
                 .author(commentSaveRequest.getAuthor())
                 .authorId(commentSaveRequest.getAuthorId())
@@ -65,7 +65,7 @@ public class CommentService {
     private CommentDisplayResponse createDisplayResponseFromEntity(Comment comment) {
         return CommentDisplayResponse.builder()
                 .id(comment.getId())
-                .postId(comment.getPostId())
+                .articleId(comment.getArticleId())
                 .comment(comment.getComment())
                 .author(comment.getAuthor())
                 .authorId(comment.getAuthorId())

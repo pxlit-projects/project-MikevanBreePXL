@@ -23,9 +23,9 @@ public class CommentController {
         return commentService.getCommentFromId(commentId);
     }
 
-    @GetMapping("/post/{postId}")
-    public List<CommentDisplayResponse> getAllCommentsFromPost(@PathVariable long postId) {
-        return commentService.getAllCommentsFromPost(postId);
+    @GetMapping("/article/{articleId}")
+    public List<CommentDisplayResponse> getAllCommentsFromArticle(@PathVariable long articleId) {
+        return commentService.getAllCommentsFromArticle(articleId);
     }
 
     @PostMapping("/")
