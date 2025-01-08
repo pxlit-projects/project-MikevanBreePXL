@@ -5,6 +5,7 @@ import { environment } from '@env/environment';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { DatePipe, CommonModule } from '@angular/common';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Component({
   selector: 'app-concept-articles-list',
@@ -17,14 +18,14 @@ export class ConceptArticlesListComponent implements OnInit {
   conceptArticles: Article[] = [];
   @Output() articleSelected = new EventEmitter<Article>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.fetchConceptArticles();
   }
 
   private fetchConceptArticles(): void {
-    this.http.get<Article[]>(`${environment.apiPostUrl}concepts/mike`)
+    this.http.get<Article[]>(`${environment.apiPostUrl}concepts/${this.authService.getCurrentUser()!.name}`)
       .subscribe({
         next: (articles) => {
           this.conceptArticles = articles;
