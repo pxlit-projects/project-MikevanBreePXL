@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <app-article-creation-form 
+        [selectedArticle]="selectedArticle"
+        (submitArticle)="createArticle($event)">
+      </app-article-creation-form>
+    </div>
+    <div class="col-md-6">
+      <app-concept-articles-list
+        (articleSelected)="onArticleSelected($event)">
+      </app-concept-articles-list>
+    </div>
+  </div>
+</div>

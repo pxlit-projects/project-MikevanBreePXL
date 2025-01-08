@@ -1,0 +1,19 @@
+<div class="concept-list">
+  <h2>Articles in Concept</h2>
+  <div class="article-grid">
+    @for (article of conceptArticles; track article.id) {
+      <mat-card class="article-card" (click)="selectArticle(article)">
+        <mat-card-header>
+          <mat-card-title>{{ article.title }}</mat-card-title>
+          <mat-card-subtitle>Written by {{ article.author }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ article.content | slice:0:250 }}</p>
+        </mat-card-content>
+        <mat-card-footer>
+          <span>Created: {{ article.createdAt | date:'medium' }}</span>
+        </mat-card-footer>
+      </mat-card>
+    }
+  </div>
+</div>

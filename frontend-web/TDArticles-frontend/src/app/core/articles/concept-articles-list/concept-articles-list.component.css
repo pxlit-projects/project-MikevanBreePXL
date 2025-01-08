@@ -1,0 +1,81 @@
+.concept-list {
+  padding: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h2 {
+  color: white;
+}
+
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  padding: 0;
+}
+
+mat-list-item {
+  height: auto !important;
+  cursor: pointer;
+}
+
+mat-card {
+  width: 100%;
+  min-width: 150px;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+mat-card-header {
+  padding: 12px;
+  background-color: #888176;
+}
+
+mat-card-title {
+  font-size: 1.2rem;
+  margin-bottom: 4px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+mat-card-subtitle {
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+mat-card-content {
+  padding: 12px !important;
+  flex-grow: 1;
+  max-height: 5em;
+  overflow: hidden;
+  font-size: 1rem;
+  line-height: 1.4;
+  background-color: #212121;
+  color: white;
+}
+
+mat-card-footer {
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  background-color: #888176;
+}
+
+@media (max-width: 600px) {
+  .concept-list {
+    padding: 8px;
+  }
+  
+  mat-card {
+    height: 240px;
+  }
+}

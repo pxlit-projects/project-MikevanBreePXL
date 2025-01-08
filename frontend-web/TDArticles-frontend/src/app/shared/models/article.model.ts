@@ -1,16 +1,10 @@
-export class Article {
-    id: number;
-    title: string;
-    author: string;
-    description: string;
-    published: boolean;
-
-    constructor(id: number, title: string, author: string, description: string, published: boolean) {
-      this.id = id;
-      this.title = title;
-      this.author = author;
-      this.description = description;
-      this.published = published;
-    }
-  }
-  
+export interface Article {
+  id: number;
+  title: string;
+  author: string;
+  authorId?: number;
+  content: string;
+  published: boolean;
+  concept?: boolean;
+  createdAt?: Date;
+}

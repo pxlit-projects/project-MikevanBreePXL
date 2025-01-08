@@ -1,0 +1,30 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #272727;
+    border-radius: 15px;
+  }
+
+  h2 {
+    color: #e6e6e6;
+  }
+  
+  mat-form-field {
+    display: block;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+  
+  button {
+    margin-top: 20px;
+  }
+
+  button[disabled] {
+    opacity: 0.6;
+  }
+
+  mat-error {
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
