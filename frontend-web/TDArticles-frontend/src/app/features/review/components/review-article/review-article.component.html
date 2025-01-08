@@ -1,0 +1,25 @@
+<div class="container mx-auto p-4">
+  @if (article) {
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ article.title }}</mat-card-title>
+        <mat-card-subtitle>By {{ article.author }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content class="mt-4">
+        <div class="prose max-w-none">
+          {{ article.content }}
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions class="flex justify-end gap-4">
+        <button mat-raised-button color="warn" (click)="submitReview(false)">
+          Reject
+        </button>
+        <button mat-raised-button color="primary" (click)="submitReview(true)">
+          Approve
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
+</div>
