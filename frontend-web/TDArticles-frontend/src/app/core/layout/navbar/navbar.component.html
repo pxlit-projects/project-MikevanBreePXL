@@ -1,4 +1,4 @@
-<img id="navbar-logo" src="./logo.png" />
+<img [routerLink]="['/article/']" id="navbar-logo" src="./logo.png" />
 <div id="navbar-links">
     @if (isWriter) {
         <button [routerLink]="['/article/create']" routerLinkActive="md:text-blue-700" style="background-color: #58a518;">

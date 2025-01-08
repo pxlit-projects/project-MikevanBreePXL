@@ -9,6 +9,7 @@
 
 #navbar-logo {
     padding: 0.66em;
+    cursor: pointer;
 
     @media (max-width: 600px) {
         max-height: 75%;
