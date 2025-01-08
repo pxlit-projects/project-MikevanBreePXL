@@ -48,6 +48,13 @@ public class PostService implements IPostService {
                 .toList();
     }
 
+    public List<PostResponse> getConcepts(String author) {
+        return postRepository.findAllByAuthor(author).stream()
+                .filter(Post::isConcept)
+                .map(post -> mapToPostResponse(post))
+                .toList();
+    }
+
     @Override
     public List<PostResponse> getPostsByAuthor(String author) {
         return postRepository.findAllByAuthor(author)

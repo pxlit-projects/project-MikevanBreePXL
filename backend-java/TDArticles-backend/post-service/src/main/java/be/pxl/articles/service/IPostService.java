@@ -13,4 +13,6 @@ public interface IPostService {
     List<PostResponse> getPostsByAuthor(String author);
     long createPost(CreatePostRequest request);
     void editPost(long id, EditPostRequest request);
+
+    List<PostResponse> getConcepts(String author);
 }

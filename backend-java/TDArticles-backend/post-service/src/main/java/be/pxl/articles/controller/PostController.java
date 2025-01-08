@@ -38,6 +38,11 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
 
+    @GetMapping("/concepts/{author}")
+    public List<PostResponse> getConcepts(@PathVariable String author) {
+        return postService.getConcepts(author);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<PostResponse> getPost(@PathVariable long id) {
         PostResponse post = postService.getPost(id);
@@ -55,6 +60,6 @@ public class PostController {
     @PutMapping("/{id}/edit")
     public ResponseEntity<Void> editPost(@PathVariable long id, @Valid @RequestBody EditPostRequest request) {
         postService.editPost(id, request);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 }
