@@ -1,6 +1,10 @@
 <div class="form-container">
     <form [formGroup]="articleForm" (ngSubmit)="onSubmit()">
-    <h2>Create New Article</h2>
+        @if (selectedArticle) {
+            <h2>Edit Article</h2>
+        } @else {
+            <h2>Create New Article</h2>
+        }
 
     <mat-form-field appearance="fill" class="w-100">
         <mat-label>Title</mat-label>
@@ -18,14 +22,6 @@
         }
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="w-100">
-        <mat-label>Author</mat-label>
-        <input matInput formControlName="author" required>
-        @if (formErrors.author) {
-        <mat-error>{{formErrors.author}}</mat-error>
-        }
-    </mat-form-field>
-
     <mat-checkbox formControlName="concept" class="mb-3">
         Save as concept
     </mat-checkbox>
@@ -37,6 +33,13 @@
         [disabled]="articleForm.invalid">
         Create Article
         </button>
+        @if (selectedArticle) {
+            <button mat-raised-button
+            color="warn"
+            (click)="cancelConcept()">
+            Cancel edit
+            </button>
+        }
     </div>
     </form>
 </div>

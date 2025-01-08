@@ -16,14 +16,10 @@ mat-form-field {
     width: 100%;
 }
 
-.button-container {
+.button-row {
     display: flex;
     justify-content: flex-end;
-    margin-top: 16px;
-}
-
-mat-checkbox {
-    margin: 8px 0;
+    gap: 8px;
 }
 
 h2 {

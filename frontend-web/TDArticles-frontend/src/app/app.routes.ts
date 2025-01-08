@@ -1,8 +1,15 @@
 import { Routes } from '@angular/router';
-import { PublishedArticlesComponent } from './core/articles/published-articles/published-articles.component';
-import { CreateArticleComponent } from './core/articles/create-article/create-article.component';
+import { AuthGuard } from './features/auth/guards/auth.guard';
 
 export const routes: Routes = [
-    { path: '', component: PublishedArticlesComponent, pathMatch: 'full' },
-    { path: 'articles/create', component: CreateArticleComponent },
+    {
+        path: 'auth',
+        loadChildren: () => import('./features/auth/auth.routes').then(m => m.AUTH_ROUTES)
+    },
+    {
+        path: 'article',
+        loadChildren: () => import('./features/article/article.routes').then(m => m.ARTICLE_ROUTES),
+        canActivate: [AuthGuard]
+    },
+    { path: '', redirectTo: '/auth/login', pathMatch: 'full' }
 ];

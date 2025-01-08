@@ -1,0 +1,13 @@
+<img id="navbar-logo" src="./logo.png" />
+<div id="navbar-links">
+    @if (isWriter) {
+        <button [routerLink]="['/article/create']" routerLinkActive="md:text-blue-700" style="background-color: #58a518;">
+            Create
+        </button>
+    }
+    @if (isReviewer) {
+        <button [routerLink]="['/review/']" routerLinkActive="md:text-blue-700" style="background-color: #212121;">
+            Review
+        </button>
+    }
+</div>

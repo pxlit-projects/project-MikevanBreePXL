@@ -8,11 +8,11 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Article } from '../../../shared/models/article.model';
 import { environment } from '@env/environment'
+import { AuthService } from '../../auth/services/auth.service';
 
 interface FormErrorMessages {
   title: string;
   content: string;
-  author: string;
   concept: string;
 }
 
@@ -47,7 +47,8 @@ export class ArticleCreationFormComponent {
   constructor(
     private fb: FormBuilder, 
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.articleForm = this.createForm();
   }
@@ -56,14 +57,12 @@ export class ArticleCreationFormComponent {
   formErrors: FormErrorMessages = {
     title: '',
     content: '',
-    author: '',
     concept: ''
   };
 
   validationMessages: Record<FormField, { [key: string]: string }> = {
     title: { required: 'Title is required' },
     content: { required: 'Content is required' },
-    author: { required: 'Author is required' },
     concept: { required: 'Concept status is required' }
   };
 
@@ -114,8 +113,17 @@ export class ArticleCreationFormComponent {
       }
     }
   }
+  
+  cancelConcept() {
+    this.selectedArticle = null;
+    this.articleForm.reset();
+  }
 
   onSubmit(): void {
+    this.articleForm.patchValue({
+      author: this.authService.getCurrentUser()?.name,
+    });
+
     if (!this.articleForm?.valid) {
       return;
     }
@@ -123,7 +131,7 @@ export class ArticleCreationFormComponent {
     this.http.post(`${environment.apiPostUrl}create`, this.articleForm.value)
       .subscribe({
         next: () => {
-          this.router.navigate(['/']);
+          this.router.navigate(['/article/']);
         },
         error: (error) => {
           console.error('Error creating article:', error);

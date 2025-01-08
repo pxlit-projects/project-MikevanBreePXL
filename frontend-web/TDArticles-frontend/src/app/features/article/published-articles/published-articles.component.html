@@ -1,0 +1,10 @@
+<div class="flex flex-col gap-4 mt-4">
+    @if (articles.length === 0) {
+        <div class="flex flex-col items-center justify-center">
+            <h1 class="text-2xl font-bold">No articles found</h1>
+        </div>
+    }
+    @for (item of articles; track $index) {
+        <app-article-item [article]="item" class="mx-auto"></app-article-item>
+    }
+</div>

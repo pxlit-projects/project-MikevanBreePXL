@@ -27,7 +27,7 @@ export class CreateArticleComponent {
   createArticle(articleData: any): void {
     this.http.post(`${environment.apiPostUrl}create`, articleData)
       .subscribe({
-        next: () => this.router.navigate(['/']),
+        next: () => this.router.navigate(['/article/']),
         error: (error) => console.error('Error creating article:', error)
       });
   }
