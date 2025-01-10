@@ -57,7 +57,6 @@ public class CommentService {
                 .articleId(commentSaveRequest.getArticleId())
                 .comment(commentSaveRequest.getComment())
                 .author(commentSaveRequest.getAuthor())
-                .authorId(commentSaveRequest.getAuthorId())
                 .creationTime(LocalDateTime.now())
                 .build();
     }
@@ -68,7 +67,6 @@ public class CommentService {
                 .articleId(comment.getArticleId())
                 .comment(comment.getComment())
                 .author(comment.getAuthor())
-                .authorId(comment.getAuthorId())
                 .creationTime(comment.getCreationTime())
                 .build();
     }

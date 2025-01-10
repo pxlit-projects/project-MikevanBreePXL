@@ -6,7 +6,7 @@ import { Article } from '../../../../shared/models/article.model';
   selector: 'app-article-item',
   standalone: true,
   imports: [
-    MatCardModule
+    MatCardModule,
   ],
   templateUrl: './article-item.component.html',
   styleUrl: './article-item.component.css'

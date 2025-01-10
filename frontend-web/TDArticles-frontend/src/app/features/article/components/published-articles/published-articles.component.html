@@ -3,16 +3,23 @@
         <div class="flex flex-col items-center justify-center mt-10">
             <mat-card class="example-card" appearance="outlined">
                 <mat-card-header>
-                  <mat-card-title>No articles have been published yet...</mat-card-title>
+                    <mat-card-title>No articles have been published yet...</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
-                  <p>Please come back another time!</p>
+                    <p>Please come back another time!</p>
                 </mat-card-content>
-              </mat-card>
-            <h1 class="text-2xl font-bold"></h1>
+            </mat-card>
         </div>
     }
     @for (item of articles; track $index) {
-        <app-article-item [article]="item" class="mx-auto"></app-article-item>
+        <div
+            class="mx-auto cursor-pointer"
+            matRipple
+            [matRippleColor]="'#0008'"
+            [matRippleUnbounded]="false"
+            [routerLink]="'/article/' + item.id"
+        >
+            <app-article-item [article]="item"></app-article-item>
+        </div>
     }
 </div>

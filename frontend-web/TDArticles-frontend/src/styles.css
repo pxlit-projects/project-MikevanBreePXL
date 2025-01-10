@@ -25,7 +25,7 @@ h1 {
 
 mat-card {
   min-width: 80dvw;
-  max-width: 80dvw;
+  /* max-width: 80dvw; */
   
   --mdc-outlined-card-container-color: #f5f5f5;
   --mdc-outlined-card-outline-color: #f5f5f5;

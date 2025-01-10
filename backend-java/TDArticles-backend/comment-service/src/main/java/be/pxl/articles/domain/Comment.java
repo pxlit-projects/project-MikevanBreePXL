@@ -20,6 +20,5 @@ public class Comment {
     private Long articleId;
     private String comment;
     private String author;
-    private int authorId;
     private LocalDateTime creationTime;
 }

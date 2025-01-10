@@ -51,10 +51,11 @@ mat-card-title {
 mat-card-subtitle {
   font-size: 0.9rem;
   margin-bottom: 0;
+  text-align: start;
 }
 
 mat-card-content {
-  padding: 12px !important;
+  padding: 16px !important;
   flex-grow: 1;
   max-height: 5em;
   overflow: hidden;
@@ -62,6 +63,7 @@ mat-card-content {
   line-height: 1.4;
   background-color: #212121;
   color: white;
+  text-align: start;
 }
 
 mat-card-footer {

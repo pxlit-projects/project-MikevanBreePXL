@@ -1,0 +1,11 @@
+mat-card {
+    --mdc-elevated-card-container-color: darkcyan;
+}
+
+mat-form-field {
+    --mdc-filled-text-field-container-color: darkcyan;
+    --mdc-filled-text-field-input-text-color: whitesmoke;
+}
+input {
+    --mdc-filled-text-field-label-text-color: whitesmoke;
+}

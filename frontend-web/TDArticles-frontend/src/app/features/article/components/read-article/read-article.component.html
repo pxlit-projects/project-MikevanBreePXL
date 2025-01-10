@@ -1,0 +1,13 @@
+<div class="flex flex-col items-center justify-center mx-auto mt-5">
+@if (article) {
+    <app-article-item [article]="article"></app-article-item>
+    <div class="comments gap-4 my-4">
+        @for (comment of this.comments; track $index) {
+            <app-comment-item [comment]="comment"></app-comment-item>
+        }
+        <app-comment-write (commentSubmitted)="onCommentSubmitted($event)"></app-comment-write>
+    </div>
+} @else {
+    <p>Loading...</p>
+}
+</div>

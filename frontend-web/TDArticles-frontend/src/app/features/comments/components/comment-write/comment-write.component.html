@@ -1,0 +1,26 @@
+<mat-card class="w-full p-4">
+  <form #commentForm="ngForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="w-full" subscriptSizing="dynamic">
+      <mat-label>Write a comment...</mat-label>
+      <input 
+        matInput
+        [(ngModel)]="commentText"
+        name="comment"
+        #comment="ngModel"
+        maxlength="500"
+      >
+      <mat-hint align="end" class="text-white">{{commentText.length || 0}}/500</mat-hint>
+      <button 
+        mat-icon-button 
+        matSuffix
+        color="accent"
+        type="submit"
+        class="pr-2"
+        (click)="onSubmit()"
+        [disabled]="!commentForm.form.valid || !commentText.trim()"
+      >
+        <mat-icon>send</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+</mat-card>

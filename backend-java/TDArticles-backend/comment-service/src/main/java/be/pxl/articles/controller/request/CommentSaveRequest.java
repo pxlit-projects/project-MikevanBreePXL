@@ -17,6 +17,4 @@ public class CommentSaveRequest {
     private String comment;
     @NotBlank
     private String author;
-    @NotNull
-    private int authorId;
 }
