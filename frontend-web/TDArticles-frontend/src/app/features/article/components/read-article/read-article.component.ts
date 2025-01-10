@@ -49,7 +49,8 @@ export class ReadArticleComponent implements OnInit {
   }
   
   onCommentSubmitted($event: string) {
-    // TODO: Add comment to the article
     console.log('Comment submitted:', $event);
+    this.commentService.sendComment(this.articleId, $event);
+    this.fetchComments();
   }
 }

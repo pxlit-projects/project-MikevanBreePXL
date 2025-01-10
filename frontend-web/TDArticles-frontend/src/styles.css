@@ -23,10 +23,12 @@ h1 {
   font-weight: 500 !important;
 }
 
-mat-card {
+.article-card { 
   min-width: 80dvw;
   /* max-width: 80dvw; */
-  
+}
+
+mat-card {
   --mdc-outlined-card-container-color: #f5f5f5;
   --mdc-outlined-card-outline-color: #f5f5f5;
 
