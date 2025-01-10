@@ -4,7 +4,7 @@
 @tailwind utilities;
 .mdc-notched-outline__notch
 {
-  border-right: none;
+  border-inline: none !important;
 }
 
 html, body { height: 100%; }
@@ -32,11 +32,11 @@ mat-card {
 
   --mat-card-title-text-font: "Montserrat Semibold";
   --mat-card-subtitle-text-font: "Montserrat Semibold";
-  --mat-card-subtitle-text-color: #58A518;
+  --mat-card-subtitle-text-color: darkorange;
 }
 
 button {
-  --mdc-protected-button-container-color: #f3841c;
+  --mdc-protected-button-container-color: darkorange;
   --mdc-protected-button-label-text-color: white ;
 }
 
@@ -47,6 +47,6 @@ mat-table {
   overflow:hidden !important;
 }
 mat-header-row {
-  background-color: #f3841c;
+  background-color: darkorange !important;
   --mat-table-header-headline-color: white;
 }

@@ -1,9 +1,9 @@
 #approve-button {
-    background-color: #58a518;
+    background-color: cyan;
     color: white;
 }
 
 #reject-button {
-    background-color: #f3841c;
+    background-color: darkorange;
     color: white;
 }

@@ -33,7 +33,7 @@
 }
 
 .default-bg {
-    @apply bg-[#58a518];
+    @apply bg-cyan-500;
 }
 
 .active-bg {
