@@ -21,7 +21,8 @@ import { ArticleService } from '../../../article/services/article.service';
     MatInputModule,
     FormsModule
   ],
-  templateUrl: './review-article.component.html'
+  templateUrl: './review-article.component.html',
+  styleUrl: './review-article.component.css', 
 })
 export class ReviewArticleComponent implements OnInit {
   article?: Article;
