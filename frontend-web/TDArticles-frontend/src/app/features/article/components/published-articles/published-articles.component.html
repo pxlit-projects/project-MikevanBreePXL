@@ -1,7 +1,15 @@
-<div class="flex flex-col gap-4 mt-4">
+<div class="flex flex-col gap-4 mt-10">
     @if (articles.length === 0) {
-        <div class="flex flex-col items-center justify-center">
-            <h1 class="text-2xl font-bold">No articles found</h1>
+        <div class="flex flex-col items-center justify-center mt-10">
+            <mat-card class="example-card" appearance="outlined">
+                <mat-card-header>
+                  <mat-card-title>No articles have been published yet...</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <p>Please come back another time!</p>
+                </mat-card-content>
+              </mat-card>
+            <h1 class="text-2xl font-bold"></h1>
         </div>
     }
     @for (item of articles; track $index) {

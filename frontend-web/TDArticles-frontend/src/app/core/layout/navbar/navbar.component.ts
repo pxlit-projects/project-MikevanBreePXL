@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 
   get isWriter(): boolean {
     return this.authService.getCurrentUser()?.role === 'writer';
@@ -19,5 +19,9 @@ export class NavbarComponent {
 
   get isReviewer(): boolean {
     return this.authService.getCurrentUser()?.role === 'reviewer';
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }

@@ -1,12 +1,12 @@
 <div class="form-container">
     <form [formGroup]="articleForm" (ngSubmit)="onSubmit()">
         @if (selectedArticle) {
-            <h2>Edit Article</h2>
+            <h1>Edit Article</h1>
         } @else {
-            <h2>Create New Article</h2>
+            <h1>Create New Article</h1>
         }
 
-    <mat-form-field appearance="fill" class="w-100">
+    <mat-form-field appearance="outline" class="w-100">
         <mat-label>Title</mat-label>
         <input matInput formControlName="title" required>
         @if (formErrors.title) {
@@ -14,7 +14,7 @@
         }
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="w-100">
+    <mat-form-field appearance="outline" class="w-100 border-red-500">
         <mat-label>Content</mat-label>
         <textarea matInput formControlName="content" rows="6" required></textarea>
         @if (formErrors.content) {

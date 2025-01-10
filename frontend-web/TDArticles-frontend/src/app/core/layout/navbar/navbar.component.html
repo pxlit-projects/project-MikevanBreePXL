@@ -1,13 +1,23 @@
 <img [routerLink]="['/article/']" id="navbar-logo" src="./logo.png" />
 <div id="navbar-links">
     @if (isWriter) {
-        <button [routerLink]="['/article/create']" routerLinkActive="md:text-blue-700" style="background-color: #58a518;">
+        <button mat-button [routerLink]="['/article/create']" 
+                [class]="'default-bg'"
+                [routerLinkActive]="'active-bg'">
             Create
         </button>
     }
     @if (isReviewer) {
-        <button [routerLink]="['/review/']" routerLinkActive="md:text-blue-700" style="background-color: #212121;">
+        <button mat-button [routerLink]="['/review/']"
+                [class]="'default-bg'"
+                [routerLinkActive]="'active-bg'">
             Review
+        </button>
+    }
+    @if (authService.isLoggedIn()) {
+        <button mat-button (click)="logout()"
+                style="background-color: #212121;">
+            Logout
         </button>
     }
 </div>

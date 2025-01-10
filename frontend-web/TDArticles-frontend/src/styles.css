@@ -10,10 +10,43 @@
 html, body { height: 100%; }
 
 html {
-    background-color: #D0D0D0;
+    background-color: #887f75;
 }
 
 body {
     margin: 0;
     font-family: "Montserrat", "Helvetica Neue", sans-serif !important;
+}
+
+h1 {
+  font-family: "Montserrat Alternates" !important;
+  font-weight: 500 !important;
+}
+
+mat-card {
+  min-width: 80dvw;
+  max-width: 80dvw;
+  
+  --mdc-outlined-card-container-color: #f5f5f5;
+  --mdc-outlined-card-outline-color: #f5f5f5;
+
+  --mat-card-title-text-font: "Montserrat Semibold";
+  --mat-card-subtitle-text-font: "Montserrat Semibold";
+  --mat-card-subtitle-text-color: #58A518;
+}
+
+button {
+  --mdc-protected-button-container-color: #f3841c;
+  --mdc-protected-button-label-text-color: white ;
+}
+
+mat-table {
+  --mat-table-background-color: #cacaca;
+  --mat-table-row-item-label-text-color: #111;
+  border-radius: 8px;
+  overflow:hidden !important;
+}
+mat-header-row {
+  background-color: #f3841c;
+  --mat-table-header-headline-color: white;
 }

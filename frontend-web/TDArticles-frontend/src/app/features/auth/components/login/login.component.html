@@ -1,4 +1,4 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+<div class="min-h-screen flex items-center justify-center p-4">
     <mat-card class="w-full max-w-md">
         <mat-card-header class="justify-center">
             <mat-card-title class="text-2xl font-bold mb-4">Login</mat-card-title>
@@ -13,9 +13,9 @@
 
                 <mat-radio-group [(ngModel)]="role" name="role" class="flex flex-col gap-2">
                     <mat-label id="labelSelectRole" class="text-gray-700 mb-2">Select your role:</mat-label>
+                    <mat-radio-button value="public">Public reader</mat-radio-button>
                     <mat-radio-button value="writer">Writer</mat-radio-button>
                     <mat-radio-button value="reviewer">Reviewer</mat-radio-button>
-                    <mat-radio-button value="public">Public</mat-radio-button>
                 </mat-radio-group>
 
                 <button mat-raised-button color="primary" type="submit" 

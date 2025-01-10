@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Article } from '../../../../shared/models/article.model';
 import { ArticleItemComponent } from '../article-item/article-item.component';
 import { ArticleService } from '../../services/article.service';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-published-articles',
   standalone: true,
-  imports: [ArticleItemComponent],
+  imports: [MatCardModule, ArticleItemComponent],
   templateUrl: './published-articles.component.html',
   styleUrl: './published-articles.component.css'
 })

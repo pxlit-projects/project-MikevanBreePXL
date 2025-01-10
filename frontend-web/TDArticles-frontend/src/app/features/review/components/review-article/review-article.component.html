@@ -11,10 +11,10 @@
         </p>
       </mat-card-content>
       <mat-card-actions class="flex justify-end gap-4">
-        <button mat-raised-button (click)="submitReview(false)">
+        <button mat-raised-button id="reject-button" (click)="submitReview(false)">
           Reject
         </button>
-        <button mat-raised-button color="primary" (click)="submitReview(true)">
+        <button mat-raised-button id="approve-button" (click)="submitReview(true)">
           Approve
         </button>
       </mat-card-actions>

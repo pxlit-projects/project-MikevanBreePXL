@@ -31,3 +31,11 @@
     height: 100%;
     padding-inline: 1em;
 }
+
+.default-bg {
+    @apply bg-[#58a518];
+}
+
+.active-bg {
+    @apply bg-orange-500;
+}

@@ -11,7 +11,8 @@ import { ArticleService } from '../../services/article.service';
   selector: 'app-create-article',
   standalone: true,
   imports: [ArticleCreationFormComponent, ConceptArticlesListComponent, CommonModule],
-  templateUrl: './create-article.component.html'
+  templateUrl: './create-article.component.html',
+  styleUrl: './create-article.component.css'
 })
 export class CreateArticleComponent implements OnDestroy {
   private selectedArticleSubject = new BehaviorSubject<Article | null>(null);
