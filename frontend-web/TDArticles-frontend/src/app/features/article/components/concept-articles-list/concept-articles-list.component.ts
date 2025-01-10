@@ -2,14 +2,14 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Article } from '../../../../shared/models/article.model';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
-import { DatePipe, CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { AuthService } from '../../../auth/services/auth.service';
 import { ArticleService } from '../../services/article.service';
 
 @Component({
   selector: 'app-concept-articles-list',
   standalone: true,
-  imports: [MatListModule, MatCardModule, DatePipe, CommonModule],
+  imports: [MatListModule, MatCardModule, DatePipe],
   templateUrl: './concept-articles-list.component.html',
   styleUrl: './concept-articles-list.component.css'
 })

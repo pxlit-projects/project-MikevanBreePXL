@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,13 +14,12 @@ import { ArticleService } from '../../../article/services/article.service';
   selector: 'app-review-article',
   standalone: true,
   imports: [
-    CommonModule,
     MatCardModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     FormsModule
-  ],
+],
   templateUrl: './review-article.component.html',
   styleUrl: './review-article.component.css', 
 })

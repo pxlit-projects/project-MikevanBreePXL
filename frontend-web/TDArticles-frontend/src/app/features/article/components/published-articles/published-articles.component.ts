@@ -4,19 +4,18 @@ import { ArticleItemComponent } from '../article-item/article-item.component';
 import { ArticleService } from '../../services/article.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatRipple, MatRippleModule } from '@angular/material/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-published-articles',
   standalone: true,
   imports: [
-    CommonModule,
     MatCardModule,
     MatRippleModule,
     RouterLink,
     ArticleItemComponent
-  ],
+],
   templateUrl: './published-articles.component.html',
   styleUrl: './published-articles.component.css'
 })
