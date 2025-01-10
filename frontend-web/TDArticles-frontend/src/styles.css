@@ -18,7 +18,7 @@ body {
     font-family: "Montserrat", "Helvetica Neue", sans-serif !important;
 }
 
-h1 {
+h1, h2 {
   font-family: "Montserrat Alternates" !important;
   font-weight: 500 !important;
 }
