@@ -68,7 +68,7 @@ public class ArticleController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{id}/edit")
+    @PutMapping("/{id}")
     public ResponseEntity<Void> editArticle(@PathVariable long id, @Valid @RequestBody EditArticleRequest request) {
         articleService.editArticle(id, request);
         return ResponseEntity.ok().build();

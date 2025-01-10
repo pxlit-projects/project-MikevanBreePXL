@@ -1,3 +1,7 @@
+h1 {
+    color: white;
+}
+
 .form-container {
     display: flex;
     justify-content: center;
@@ -23,6 +27,6 @@ mat-form-field {
     gap: 8px;
 }
 
-h1 {
-    color: white;
+#create-button {
+    --mdc-protected-button-container-color: darkcyan;
 }

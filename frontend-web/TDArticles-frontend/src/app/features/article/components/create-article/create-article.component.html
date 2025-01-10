@@ -2,8 +2,8 @@
 <div id="create-article-container">
   <app-article-creation-form 
     [selectedArticle]="selectedArticle$ | async"
-    (submitArticle)="createArticle($event)">
-    (cancelConceptEdit)="cancelConceptEdit()"
+    (submitArticle)="createArticle($event)"
+    (cancelEdit)="cancelConceptEdit()">
   </app-article-creation-form>
   <app-concept-articles-list
     (articleSelected)="onArticleSelected($event)">

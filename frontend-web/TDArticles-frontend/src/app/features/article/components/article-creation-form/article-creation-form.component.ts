@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -10,13 +10,15 @@ import { environment } from '@env/environment'
 import { AuthService } from '../../../auth/services/auth.service';
 import { ArticleService } from '../../services/article.service';
 
-interface FormErrorMessages {
+interface ArticleForm {
+  id: number;
   title: string;
   content: string;
-  concept: string;
+  author: string;
+  concept: boolean;
 }
 
-type FormField = keyof FormErrorMessages;
+type FormField = keyof ArticleForm;
 
 @Component({
   selector: 'app-article-creation-form',
@@ -31,66 +33,65 @@ type FormField = keyof FormErrorMessages;
   templateUrl: './article-creation-form.component.html',
   styleUrl: './article-creation-form.component.css'
 })
-export class ArticleCreationFormComponent {
+export class ArticleCreationFormComponent implements OnInit {
   @Input() set selectedArticle(article: Article | null) {
     if (article) {
       this.articleForm.patchValue({
+        id: article.id,
         title: article.title,
         content: article.content,
         author: article.author,
         concept: article.concept
       });
-      this.isConceptLoaded = true;
     }
   }
   @Output() submitArticle = new EventEmitter<Article>();
-  @Output() cancelConceptEdit = new EventEmitter<void>();
+  @Output() cancelEdit = new EventEmitter<void>();
 
   constructor(
-    private fb: FormBuilder, 
-    private router: Router,
-    private articleService: ArticleService,
+    private fb: FormBuilder,
     private authService: AuthService
   ) {
     this.articleForm = this.createForm();
   }
 
-  isConceptLoaded = false;
   articleForm: FormGroup;
-  formErrors: FormErrorMessages = {
+  formErrors: Record<FormField, string> = {
+    id: '',
     title: '',
     content: '',
+    author: '',
     concept: ''
   };
 
-  validationMessages: Record<FormField, { [key: string]: string }> = {
-    title: { required: 'Title is required' },
-    content: { required: 'Content is required' },
-    concept: { required: 'Concept status is required' }
+  validationMessages: Record<FormField, Record<string, string>> = {
+    id: {},
+    title: {
+      required: 'Title is required'
+    },
+    content: {
+      required: 'Content is required'
+    },
+    author: {},
+    concept: {
+      required: 'Concept status is required'
+    }
   };
 
   ngOnInit(): void {
-    this.subscribeToFormChanges();
-    
     this.articleForm.patchValue({
       author: this.authService.getCurrentUser()?.name,
+      concept: false // Set default value
     });
-
-    // Add form state debugging
-    this.articleForm.statusChanges.subscribe(status => {
-      console.log('Form Status:', status);
-      console.log('Form Values:', this.articleForm.value);
-      console.log('Form Valid:', this.articleForm.valid);
-      console.log('Form Errors:', this.articleForm.errors);
-    });
+    this.subscribeToFormChanges();
   }
 
   private createForm(): FormGroup {
     return this.fb.group({
+      id: [''],
       title: ['', [Validators.required]],
       content: ['', [Validators.required]],
       author: ['', [Validators.required]],
-      authorId: [''],
       concept: [false]
     });
   }
@@ -112,20 +113,22 @@ export class ArticleCreationFormComponent {
 
     if (control?.invalid && (control.dirty || control.touched)) {
       const messages = this.validationMessages[field];
-      if (control.errors) {
-        Object.keys(control.errors).forEach(errorKey => {
-          if (messages[errorKey]) {
-            this.formErrors[field] += messages[errorKey];
-          }
-        });
+      for (const key in control.errors) {
+        this.formErrors[field] += messages[key] + ' ';
       }
     }
   }
   
-  cancelConcept() {
-    this.isConceptLoaded = false;
+  resetArticleForm() {
+    if (this.articleForm.value.id) {
+      this.cancelEdit.emit();
+    }
     this.articleForm.reset();
-    this.cancelConceptEdit.emit();
+    this.articleForm.patchValue({
+      author: this.authService.getCurrentUser()?.name,
+      concept: false // Set default value
+    });
+    this.subscribeToFormChanges();
   }
 
   onSubmit(): void {
@@ -133,15 +136,16 @@ export class ArticleCreationFormComponent {
       return;
     }
 
-    this.articleService.createArticle(this.articleForm.value)
-      .subscribe({
-        next: () => {
-          this.router.navigate(['/article/']);
-        },
-        error: (error) => {
-          console.error('Error creating article:', error);
-        }
-      });
+    const formValue = this.articleForm.value;
+    const articleData: Article = {
+      id: formValue.id,
+      title: formValue.title,
+      content: formValue.content,
+      author: formValue.author,
+      concept: formValue.concept ?? false // Set default if undefined
+    };
+
+    this.submitArticle.emit(articleData);
   }
 
   // Add helper method for form validation state

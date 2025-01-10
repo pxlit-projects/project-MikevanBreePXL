@@ -22,7 +22,10 @@ export class ArticleService {
     return this.http.get<Article[]>(`${environment.apiArticleUrl}concepts/${authorName}`)
   }
 
-  public createArticle(articleData: Article): Observable<Object> {
-    return this.http.post(`${environment.apiArticleUrl}create`, articleData) as Observable<Object>;
+  public submitArticle(articleData: Article): Observable<Object> {
+    if (articleData.id) {
+      return this.http.put(`${environment.apiArticleUrl}${articleData.id}`, articleData);
+    }
+    return this.http.post(`${environment.apiArticleUrl}create`, articleData)
   }
 }

@@ -29,9 +29,9 @@ export class CreateArticleComponent implements OnDestroy {
   }
 
   createArticle(articleData: Article): void {
-    this.articleService.createArticle(articleData)
+    this.articleService.submitArticle(articleData)
       .subscribe({
-        next: () => this.router.navigate(['/articles/']),
+        next: () => this.router.navigate(['/article/']),
         error: (error) => console.error('Error creating article:', error)
       });
   }

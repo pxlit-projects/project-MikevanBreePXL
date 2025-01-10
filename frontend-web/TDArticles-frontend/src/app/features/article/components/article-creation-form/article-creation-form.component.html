@@ -6,40 +6,39 @@
             <h1>Create New Article</h1>
         }
 
-    <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Title</mat-label>
-        <input matInput formControlName="title" required>
-        @if (formErrors.title) {
-        <mat-error>{{formErrors.title}}</mat-error>
-        }
-    </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title" required>
+            @if (formErrors.title) {
+            <mat-error>{{formErrors.title}}</mat-error>
+            }
+        </mat-form-field>
 
-    <mat-form-field appearance="outline" class="w-100 border-red-500">
-        <mat-label>Content</mat-label>
-        <textarea matInput formControlName="content" rows="6" required></textarea>
-        @if (formErrors.content) {
-        <mat-error>{{formErrors.content}}</mat-error>
-        }
-    </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 border-red-500">
+            <mat-label>Content</mat-label>
+            <textarea matInput formControlName="content" rows="6" required></textarea>
+            @if (formErrors.content) {
+            <mat-error>{{formErrors.content}}</mat-error>
+            }
+        </mat-form-field>
 
-    <mat-checkbox formControlName="concept" class="mb-3">
-        Save as concept
-    </mat-checkbox>
+        <mat-checkbox formControlName="concept" class="mb-3">
+            Save as concept
+        </mat-checkbox>
 
-    <div class="button-row">
-        <button mat-raised-button
-        color="primary"
-        type="submit"
-        [disabled]="articleForm.invalid">
-        Create Article
-        </button>
-        @if (isConceptLoaded) {
+        <div class="button-row">
             <button mat-raised-button
-            color="warn"
-            (click)="cancelConcept()">
-            Cancel edit
+            id="cancel-button"
+            [disabled]="!articleForm.dirty && !articleForm.value.id"
+            (click)="resetArticleForm()">
+            Cancel
             </button>
-        }
-    </div>
+            <button mat-raised-button
+            id="create-button"
+            type="submit"
+            [disabled]="articleForm.invalid">
+            Create Article
+            </button>
+        </div>
     </form>
 </div>
