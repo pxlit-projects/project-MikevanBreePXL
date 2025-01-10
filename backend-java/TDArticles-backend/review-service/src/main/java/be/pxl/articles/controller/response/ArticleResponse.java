@@ -18,7 +18,7 @@ public class ArticleResponse {
     private String title;
     private String content;
     private String author;
-    private List<CommentResponse> comments;
+    private Boolean concept;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime creationTime;
 }

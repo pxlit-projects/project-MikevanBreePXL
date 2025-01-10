@@ -21,6 +21,5 @@ public class Article {
     private String content;
     private String author;
     private LocalDateTime creationTime;
-    private boolean concept;
-    private boolean published;
+    private Status status;
 }

@@ -62,6 +62,12 @@ public class ArticleController {
         return ResponseEntity.created(URI.create("/article/" + createdArticleId)).build();
     }
 
+    @PostMapping("{id}/publish")
+    public ResponseEntity<Void> publishArticle(@PathVariable long id, @RequestBody Boolean approved) {
+        articleService.publishArticle(id, approved);
+        return ResponseEntity.ok().build();
+    }
+
     @PutMapping("/{id}/edit")
     public ResponseEntity<Void> editArticle(@PathVariable long id, @Valid @RequestBody EditArticleRequest request) {
         articleService.editArticle(id, request);

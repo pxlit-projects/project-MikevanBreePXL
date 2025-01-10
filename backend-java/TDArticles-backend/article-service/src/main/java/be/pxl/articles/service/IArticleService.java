@@ -17,4 +17,6 @@ public interface IArticleService {
     List<ArticleResponse> getConcepts(String author);
 
     List<ArticleResponse> getPendingArticles();
+
+    void publishArticle(long id, boolean approved);
 }

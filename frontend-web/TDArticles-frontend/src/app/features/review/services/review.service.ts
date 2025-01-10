@@ -11,14 +11,14 @@ export class ReviewService {
   constructor(private http: HttpClient) { }
 
   getPendingArticles(): Observable<Article[]> {
-    return this.http.get<Article[]>(`${environment.apiArticleUrl}pending`);
+    return this.http.get<Article[]>(`${environment.apiReviewUrl}`);
   }
 
   getArticle(articleId: number): Observable<Article> {
     return this.http.get<Article>(`${environment.apiReviewUrl}${articleId}`);
   }
 
-  submitReview(articleId: number, reviewApproved: boolean): Observable<void> {
-    return this.http.post<void>(`${environment.apiReviewUrl}${articleId}`, { reviewApproved });
+  submitReview(articleId: number, approved: boolean): Observable<void> {
+    return this.http.post<void>(`${environment.apiReviewUrl}${articleId}`, { approved });
   }
 }

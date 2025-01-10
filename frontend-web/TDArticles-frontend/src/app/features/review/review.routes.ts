@@ -4,5 +4,5 @@ import { ReviewArticleComponent } from './components/review-article/review-artic
 
 export const REVIEW_ROUTES: Routes = [
     { path: '', component: ReviewOverviewComponent, pathMatch: 'full' },
-    { path: ':id', component: ReviewArticleComponent, pathMatch: 'full' }
+    { path: ':id', component: ReviewArticleComponent }
 ];
