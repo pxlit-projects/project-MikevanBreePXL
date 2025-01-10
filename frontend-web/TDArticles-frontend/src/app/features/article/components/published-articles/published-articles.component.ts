@@ -36,8 +36,7 @@ export class PublishedArticlesComponent implements OnInit {
   /** Shows a centered and persistent ripple. */
   launchRipple() {
     const rippleRef = this.ripple.launch({
-      persistent: true,
-      centered: true
+      persistent: true
     });
 
     // Fade out the ripple later.
