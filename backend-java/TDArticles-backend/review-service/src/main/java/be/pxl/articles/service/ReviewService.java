@@ -3,11 +3,13 @@ package be.pxl.articles.service;
 import be.pxl.articles.client.ArticleClient;
 import be.pxl.articles.controller.request.ReviewRequest;
 import be.pxl.articles.controller.response.ArticleResponse;
+import be.pxl.articles.controller.request.NotificationRequest;
 import be.pxl.articles.controller.response.ReviewResponse;
 import be.pxl.articles.domain.Review;
 import be.pxl.articles.exception.ReviewNotFoundException;
 import be.pxl.articles.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.List;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ArticleClient articleClient;
+    private final RabbitTemplate rabbitTemplate;
 
     public List<ArticleResponse> getPendingArticles() {
         return articleClient.getPendingArticles()
@@ -33,6 +36,9 @@ public class ReviewService {
     public Long postReview(Long articleId, ReviewRequest reviewRequest) {
         Review review = mapToEntity(articleId, reviewRequest);
         articleClient.publishArticle(articleId, reviewRequest.isApproved());
+
+        sendNotification(articleId, reviewRequest);
+
         return reviewRepository.save(review).getId();
     }
 
@@ -49,5 +55,22 @@ public class ReviewService {
                 .articleId(articleId)
                 .approved(reviewRequest.isApproved())
                 .build();
+    }
+
+    private void sendNotification(Long articleId, ReviewRequest reviewRequest) {
+        NotificationRequest.NotificationRequestBuilder notificationRequest = NotificationRequest.builder()
+                .sender(reviewRequest.getReviewer())
+                .receiver(reviewRequest.getReceiver());
+
+        StringBuilder message = new StringBuilder("Review ");
+        if (reviewRequest.isApproved()) {
+            message.append("approved");
+        } else {
+            message.append("rejected");
+        }
+        message.append(" for article #").append(articleId);
+        notificationRequest.message(message.toString());
+
+        rabbitTemplate.convertAndSend("NotificationsQueue", notificationRequest.build());
     }
 }

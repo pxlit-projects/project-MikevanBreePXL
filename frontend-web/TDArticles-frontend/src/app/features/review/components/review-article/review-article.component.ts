@@ -42,7 +42,7 @@ export class ReviewArticleComponent implements OnInit {
   submitReview(reviewApproved: boolean): void {
     if (!this.article || !this.article.id) return;
     
-    this.reviewService.submitReview(this.article.id, reviewApproved)
+    this.reviewService.submitReview(this.article.id, reviewApproved, this.article!.author)
       .subscribe(() => {
         this.router.navigate(['/review']);
       });

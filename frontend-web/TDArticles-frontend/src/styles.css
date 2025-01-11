@@ -52,3 +52,17 @@ mat-header-row {
   background-color: darkorange !important;
   --mat-table-header-headline-color: white;
 }
+
+.notification-toast {
+  background: #323232;
+  color: white;
+  margin-top: 60px;
+}
+
+.mat-mdc-snack-bar-container {
+  &.notification-toast {
+    button {
+      color: #69f0ae;
+    }
+  }
+}

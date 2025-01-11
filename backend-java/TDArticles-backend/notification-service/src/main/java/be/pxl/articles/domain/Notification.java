@@ -1,4 +1,4 @@
-package be.pxl.articles.controller.request;
+package be.pxl.articles.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviewRequest {
-    private boolean approved;
-    private String reviewer;
+public class Notification {
+    private String sender;
+    private String message;
     private String receiver;
 }

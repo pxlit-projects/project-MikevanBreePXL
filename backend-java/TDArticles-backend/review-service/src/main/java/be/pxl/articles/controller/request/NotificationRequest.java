@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviewRequest {
-    private boolean approved;
-    private String reviewer;
+public class NotificationRequest {
+    private String sender;
+    private String message;
     private String receiver;
 }

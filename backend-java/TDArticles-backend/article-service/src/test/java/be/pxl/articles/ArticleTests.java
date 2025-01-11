@@ -1,6 +1,7 @@
 package be.pxl.articles;
 
 import be.pxl.articles.domain.Article;
+import be.pxl.articles.domain.Status;
 import be.pxl.articles.controller.request.CreateArticleRequest;
 import be.pxl.articles.repository.ArticleRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -98,7 +99,7 @@ public class ArticleTests {
 
         Article[] articles = objectMapper.readValue(result.getResponse().getContentAsString(), Article[].class);
 
-        assertFalse(articles[0].isConcept());
+        assertFalse(articles[0].getStatus().equals(Status.CONCEPT));
     }
 
     @Test
