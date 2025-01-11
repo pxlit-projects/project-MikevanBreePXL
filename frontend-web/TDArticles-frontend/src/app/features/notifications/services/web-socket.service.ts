@@ -1,9 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { environment } from '@env/environment';
-import { Observable, EMPTY, BehaviorSubject, filter, take } from 'rxjs';
+import { Observable, BehaviorSubject, filter, take } from 'rxjs';
 import { AuthService } from '../../auth/services/auth.service';
 import { Client, Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import { ReviewNotification } from '../../../shared/models/review-notification.model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,7 @@ export class WebSocketService implements OnDestroy {
     this.stompClient.activate();
   }
 
-  public subscribeToUserNotifications(): Observable<any> {
+  public subscribeToUserNotifications(): Observable<ReviewNotification> {
     return new Observable(subscriber => {
       this.connected$.pipe(
         filter(connected => connected),

@@ -16,7 +16,7 @@ import { CommentWriteComponent } from '../../../comments/components/comment-writ
   styleUrl: './read-article.component.css'
 })
 export class ReadArticleComponent implements OnInit {
-  articleId: number = 0;
+  articleId = 0;
   article: Article | null = null;
   comments: ArticleComment[] = [];
 

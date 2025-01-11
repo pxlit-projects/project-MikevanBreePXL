@@ -6,7 +6,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatRipple, MatRippleModule } from '@angular/material/core';
 
 import { RouterLink } from '@angular/router';
-import { NotificationService } from '../../../notifications/services/notification.service';
 
 @Component({
   selector: 'app-published-articles',

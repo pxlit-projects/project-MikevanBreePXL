@@ -6,7 +6,6 @@ import { ConceptArticlesListComponent } from '../concept-articles-list/concept-a
 import { Article } from '../../../../shared/models/article.model';
 import { BehaviorSubject } from 'rxjs';
 import { ArticleService } from '../../services/article.service';
-import { WebSocketService } from '../../../notifications/services/web-socket.service';
 
 @Component({
   selector: 'app-create-article',

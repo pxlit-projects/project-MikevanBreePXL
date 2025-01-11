@@ -1,17 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { WebSocketService } from '../../services/web-socket.service';
+import { ReviewNotification } from '../../../../shared/models/review-notification.model';
 
 @Component({
   selector: 'app-notifications',
   template: `
-    <div *ngFor="let notification of notifications">
-      {{ notification.sender }}: {{ notification.message }}
-    </div>
-  `
+    @for (notification of notifications; track notification) {
+      <div>
+        {{ notification.sender }}: {{ notification.message }}
+      </div>
+    }
+    `
 })
 export class NotificationsComponent implements OnInit {
 
-  notifications: any[] = [];
+  notifications: ReviewNotification[] = [];
 
   constructor(private webSocketService: WebSocketService) {}
 

@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class CommentWriteComponent {
   @Output() commentSubmitted = new EventEmitter<string>();
-  commentText: string = '';
+  commentText = '';
 
   onSubmit() {
     if (this.commentText.trim()) {

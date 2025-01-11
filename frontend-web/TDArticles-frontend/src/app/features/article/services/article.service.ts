@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Article } from '../../../shared/models/article.model';
 import { environment } from '@env/environment';
@@ -22,7 +22,7 @@ export class ArticleService {
     return this.http.get<Article[]>(`${environment.apiArticleUrl}concepts/${authorName}`)
   }
 
-  public submitArticle(articleData: Article): Observable<Object> {
+  public submitArticle(articleData: Article): Observable<object> {
     if (articleData.id) {
       return this.http.put(`${environment.apiArticleUrl}${articleData.id}`, articleData);
     }

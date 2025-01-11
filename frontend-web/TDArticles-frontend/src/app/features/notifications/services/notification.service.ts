@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { WebSocketService } from './web-socket.service';
 import { filter } from 'rxjs';
+import { ReviewNotification } from '../../../shared/models/review-notification.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class NotificationService {
     });
   }
 
-  showNotification(notification: any): void {
+  showNotification(notification: ReviewNotification): void {
     this.snackBar.open(
       `${notification.sender}: ${notification.message}`,
       'Close',

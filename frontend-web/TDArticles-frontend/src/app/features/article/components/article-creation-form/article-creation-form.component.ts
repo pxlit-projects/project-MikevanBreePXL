@@ -4,11 +4,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
 import { Article } from '../../../../shared/models/article.model';
-import { environment } from '@env/environment'
 import { AuthService } from '../../../auth/services/auth.service';
-import { ArticleService } from '../../services/article.service';
 
 interface ArticleForm {
   id: number;

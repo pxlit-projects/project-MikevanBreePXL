@@ -10,7 +10,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from './features/notifications/services/notification.service';
 
 @Component({
-  selector: 'app-TDArticles',
+  selector: 'app-tdarticles',
   standalone: true,
   imports: [
     RouterOutlet,
