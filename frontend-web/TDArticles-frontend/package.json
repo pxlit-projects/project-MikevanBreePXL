@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint"

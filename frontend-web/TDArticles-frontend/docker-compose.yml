@@ -1,0 +1,15 @@
+services:
+  frontend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      - API_GATEWAY_URL=http://localhost:8090/
+    ports:
+      - "80:80"
+    networks:
+      - cloudservice-network
+
+networks:
+  cloudservice-network:
+    driver: bridge
