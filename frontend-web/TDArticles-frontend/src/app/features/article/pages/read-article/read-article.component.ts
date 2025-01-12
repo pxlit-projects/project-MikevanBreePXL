@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Article } from '../../../../shared/models/article.model';
 import { ArticleService } from '../../services/article.service';
-import { ArticleItemComponent } from '../article-item/article-item.component';
 import { CommentService } from '../../../comments/services/comment.service';
 import { ArticleComment } from '../../../../shared/models/article-comment.model';
 import { CommentItemComponent } from '../../../comments/components/comment-item/comment-item.component';
 import { CommentWriteComponent } from '../../../comments/components/comment-write/comment-write.component';
+import { ArticleItemComponent } from '../../components/article-item/article-item.component';
 
 @Component({
   selector: 'app-read-article',

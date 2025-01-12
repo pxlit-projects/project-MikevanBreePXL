@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { CreateArticleComponent } from './components/create-article/create-article.component';
-import { PublishedArticlesComponent } from './components/published-articles/published-articles.component';
-import { ReadArticleComponent } from './components/read-article/read-article.component';
-import { EditArticleComponent } from './components/edit-article/edit-article.component';
+import { CreateArticleComponent } from './pages/create-article/create-article.component';
+import { PublishedArticlesComponent } from './pages/published-articles/published-articles.component';
+import { ReadArticleComponent } from './pages/read-article/read-article.component';
+import { EditArticleComponent } from './pages/edit-article/edit-article.component';
 import { ArticleEditGuard } from './guards/article-edit.guard';
 import { AuthGuard } from '../auth/guards/auth.guard';
 

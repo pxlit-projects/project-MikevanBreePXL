@@ -1,8 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ArticleCreationFormComponent } from '../article-creation-form/article-creation-form.component';
-import { ConceptArticlesListComponent } from '../concept-articles-list/concept-articles-list.component';
+import { ArticleCreationFormComponent } from '../../components/article-creation-form/article-creation-form.component';
+import { ConceptArticlesListComponent } from '../../components/concept-articles-list/concept-articles-list.component';
 import { Article } from '../../../../shared/models/article.model';
 import { BehaviorSubject } from 'rxjs';
 import { ArticleService } from '../../services/article.service';

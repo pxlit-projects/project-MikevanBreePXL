@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ArticleCreationFormComponent } from '../article-creation-form/article-creation-form.component';
+import { ArticleCreationFormComponent } from '../../components/article-creation-form/article-creation-form.component';
 import { ArticleService } from '../../services/article.service';
 import { Article } from '../../../../shared/models/article.model';
 import { BehaviorSubject } from 'rxjs';

@@ -12,8 +12,8 @@ import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { Article } from '../../../../shared/models/article.model';
-import { ArticleItemComponent } from '../article-item/article-item.component';
 import { ArticleFilters, ArticleService } from '../../services/article.service';
+import { ArticleItemComponent } from '../../components/article-item/article-item.component';
 
 @Component({
   selector: 'app-published-articles',
