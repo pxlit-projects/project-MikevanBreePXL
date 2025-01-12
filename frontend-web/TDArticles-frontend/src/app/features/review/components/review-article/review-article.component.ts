@@ -25,6 +25,8 @@ import { ArticleService } from '../../../article/services/article.service';
 })
 export class ReviewArticleComponent implements OnInit {
   article?: Article;
+  showRejectionNotes = false;
+  rejectionNotes = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -39,10 +41,18 @@ export class ReviewArticleComponent implements OnInit {
       .subscribe(article => this.article = article);
   }
 
+  showRejectNotes(): void {
+    this.showRejectionNotes = true;
+  }
+
   submitReview(reviewApproved: boolean): void {
     if (!this.article || !this.article.id) return;
     
-    this.reviewService.submitReview(this.article.id, reviewApproved, this.article!.author)
+    if (!reviewApproved && !this.rejectionNotes.trim()) {
+      return; // Don't allow empty rejection notes
+    }
+
+    this.reviewService.submitReview(this.article.id, reviewApproved, this.article!.author, this.rejectionNotes)
       .subscribe(() => {
         this.router.navigate(['/review']);
       });

@@ -6,11 +6,12 @@ import { ConceptArticlesListComponent } from '../../components/concept-articles-
 import { Article } from '../../../../shared/models/article.model';
 import { BehaviorSubject } from 'rxjs';
 import { ArticleService } from '../../services/article.service';
+import { SavedArticlesListComponent } from '../../components/saved-articles-list/saved-articles-list.component';
 
 @Component({
   selector: 'app-create-article',
   standalone: true,
-  imports: [ArticleCreationFormComponent, ConceptArticlesListComponent, CommonModule],
+  imports: [ArticleCreationFormComponent, ConceptArticlesListComponent, SavedArticlesListComponent, CommonModule],
   templateUrl: './create-article.component.html',
   styleUrl: './create-article.component.css'
 })
@@ -31,7 +32,7 @@ export class CreateArticleComponent implements OnDestroy {
   createArticle(articleData: Article): void {
     this.articleService.submitArticle(articleData)
       .subscribe({
-        next: () => this.router.navigate(['/article/']),
+        next: () => this.router.navigate(['/article']),
         error: (error) => console.error('Error creating article:', error)
       });
   }

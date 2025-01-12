@@ -13,10 +13,10 @@ public interface IArticleService {
     List<ArticleResponse> getArticlesByAuthor(String author);
     long createArticle(CreateArticleRequest request);
     void editArticle(long id, EditArticleRequest request);
-
     List<ArticleResponse> getConcepts(String author);
-
     List<ArticleResponse> getPendingArticles();
-
-    void publishArticle(long id, boolean approved);
+    List<ArticleResponse> getReadyToPublishArticles(String author);
+    void publishReview(long id, boolean approved);
+    void publishArticle(long id, boolean published, String username);
+    void deleteArticle(long id, String username);
 }

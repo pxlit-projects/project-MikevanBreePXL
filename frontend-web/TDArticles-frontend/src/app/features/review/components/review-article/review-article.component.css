@@ -3,7 +3,12 @@
     color: white;
 }
 
-#reject-button {
-    background-color: darkorange;
+.reject-button {
+    background-color: darkcyan;
+    color: white;
+}
+
+.reject-button:disabled {
+    background-color: grey;
     color: white;
 }

@@ -34,12 +34,12 @@ export class EditArticleComponent implements OnInit {
   editArticle(articleData: Article): void {
     this.articleService.submitArticle(articleData)
       .subscribe({
-        next: () => this.router.navigate(['/article']),
+        next: () => this.router.navigate(['/article/']),
         error: (error) => console.error('Error updating article:', error)
       });
   }
 
   cancelEdit() {
-    this.router.navigate(['/article', this.route.snapshot.paramMap.get('id')]);
+    this.router.navigate(['/article/read', this.route.snapshot.paramMap.get('id')]);
   }
 }

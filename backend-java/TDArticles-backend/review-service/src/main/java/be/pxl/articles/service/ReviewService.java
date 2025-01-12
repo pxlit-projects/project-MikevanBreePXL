@@ -24,7 +24,6 @@ public class ReviewService {
     public List<ArticleResponse> getPendingArticles(String username) {
         return articleClient.getPendingArticles(username)
                 .stream()
-                .filter(article -> reviewRepository.findAllByArticleId(article.getId()).isEmpty())
                 .toList();
     }
 
@@ -35,7 +34,7 @@ public class ReviewService {
 
     public Long postReview(Long articleId, ReviewRequest reviewRequest, String username) {
         Review review = mapToEntity(articleId, reviewRequest);
-        articleClient.publishArticle(articleId, reviewRequest.isApproved(), username);
+        articleClient.publishReview(articleId, reviewRequest.isApproved());
 
         sendNotification(articleId, reviewRequest, username);
 
@@ -51,14 +50,17 @@ public class ReviewService {
     }
 
     private Review mapToEntity(Long articleId, ReviewRequest reviewRequest) {
-        return Review.builder()
+        var reviewBuilder = Review.builder()
                 .articleId(articleId)
-                .approved(reviewRequest.isApproved())
-                .build();
+                .approved(reviewRequest.isApproved());
+        if (!reviewRequest.isApproved()) {
+            reviewBuilder.rejectionNotes(reviewRequest.getRejectionNotes());
+        }
+        return reviewBuilder.build();
     }
 
     private void sendNotification(Long articleId, ReviewRequest reviewRequest, String reviewer) {
-        NotificationRequest.NotificationRequestBuilder notificationRequest = NotificationRequest.builder()
+        var notificationRequest = NotificationRequest.builder()
                 .sender(reviewer)
                 .receiver(reviewRequest.getReceiver());
 
@@ -69,6 +71,10 @@ public class ReviewService {
             message.append("rejected");
         }
         message.append(" for article #").append(articleId);
+        if (!reviewRequest.isApproved()) {
+            message.append("\n\nNotes:\n").append(reviewRequest.getRejectionNotes());
+        }
+
         notificationRequest.message(message.toString());
 
         rabbitTemplate.convertAndSend("NotificationsQueue", notificationRequest.build());

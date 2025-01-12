@@ -9,7 +9,7 @@ import { AuthGuard } from '../auth/guards/auth.guard';
 export const ARTICLE_ROUTES: Routes = [
     { path: '', component: PublishedArticlesComponent, pathMatch: 'full' },
     { path: 'create', component: CreateArticleComponent },
-    { path: ':id', component: ReadArticleComponent, pathMatch: 'full' },
+    { path: 'read/:id', component: ReadArticleComponent, pathMatch: 'full' },
     { 
         path: 'edit/:id', 
         component: EditArticleComponent, 

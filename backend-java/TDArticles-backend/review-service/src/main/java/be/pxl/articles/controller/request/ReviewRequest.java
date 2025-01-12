@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class ReviewRequest {
     private boolean approved;
     private String receiver;
+    private String rejectionNotes;
 }

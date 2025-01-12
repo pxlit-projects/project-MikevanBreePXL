@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { WebSocketService } from './web-socket.service';
 import { filter } from 'rxjs';
 import { ReviewNotification } from '../../../shared/models/review-notification.model';
+import { NotificationSnackbarPopupComponent } from '../components/notification-snackbar-popup/notification-snackbar-popup.component';
 
 @Injectable({
   providedIn: 'root'
@@ -25,15 +26,17 @@ export class NotificationService {
   }
 
   showNotification(notification: ReviewNotification): void {
-    this.snackBar.open(
-      `${notification.sender}: ${notification.message}`,
-      'Close',
-      {
-        duration: 5000,
-        horizontalPosition: 'end',
-        verticalPosition: 'top',
-        panelClass: ['notification-toast']
-      }
-    );
+    const message = notification.message.replace(/\n/g, '<br>');
+
+    this.snackBar.openFromComponent(NotificationSnackbarPopupComponent, {
+      data: {
+        sender: notification.sender,
+        message: message
+      },
+      duration: 5000,
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+      panelClass: ['notification-toast']
+    });
   }
 }

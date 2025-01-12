@@ -1,0 +1,8 @@
+:host {
+    display: block;
+    white-space: pre-line;
+}
+.sender {
+    font-weight: bold;
+    margin-right: 8px;
+}

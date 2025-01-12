@@ -49,8 +49,13 @@ public class ArticleController {
         return articleService.getPendingArticles();
     }
 
-    @GetMapping("/concepts/{author}")
-    public List<ArticleResponse> getConceptArticlesByAuthor(@PathVariable String author) {
+    @GetMapping("/publish-ready")
+    public List<ArticleResponse> getReadyToPublishArticles(@RequestHeader("Username") String author) {
+        return articleService.getReadyToPublishArticles(author);
+    }
+
+    @GetMapping("/concepts")
+    public List<ArticleResponse> getConceptArticlesByAuthor(@RequestHeader("Username") String author) {
         return articleService.getConcepts(author);
     }
 
@@ -68,9 +73,15 @@ public class ArticleController {
         return ResponseEntity.created(URI.create("/article/" + createdArticleId)).build();
     }
 
-    @PostMapping("{id}/publish")
-    public ResponseEntity<Void> publishArticle(@PathVariable long id, @RequestBody Boolean approved) {
-        articleService.publishArticle(id, approved);
+    @PostMapping("{id}/publish/review")
+    public ResponseEntity<Void> publishReview(@PathVariable long id, @RequestBody Boolean approved) {
+        articleService.publishReview(id, approved);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("{id}/publish/article")
+    public ResponseEntity<Void> publishArticle(@PathVariable long id, @RequestBody Boolean publish, @RequestHeader("Username") String username) {
+        articleService.publishArticle(id, publish, username);
         return ResponseEntity.ok().build();
     }
 
@@ -78,5 +89,11 @@ public class ArticleController {
     public ResponseEntity<Void> editArticle(@PathVariable long id, @Valid @RequestBody EditArticleRequest request) {
         articleService.editArticle(id, request);
         return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteArticle(@PathVariable long id, @RequestHeader("Username") String username) {
+        articleService.deleteArticle(id, username);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -31,7 +31,7 @@ export class ArticleService {
     return this.http.get<Article>(`${environment.apiArticleUrl}${articleId}`, { headers });
   }
 
-  public fetchPublishedArticles(filters?: ArticleFilters): Observable<Article[]> {
+  fetchPublishedArticles(filters?: ArticleFilters): Observable<Article[]> {
     let headers = new HttpHeaders();
     headers = headers.set('Username', this.authService.getCurrentUser()!.name);
 
@@ -69,18 +69,37 @@ export class ArticleService {
     );
   }
   
-  public fetchConceptArticles(authorName: string): Observable<Article[]> {
+  fetchConceptArticles(): Observable<Article[]> {
     let headers = new HttpHeaders();
     headers = headers.set('Username', this.authService.getCurrentUser()!.name);
-    return this.http.get<Article[]>(`${environment.apiArticleUrl}concepts/${authorName}`, { headers })
+    return this.http.get<Article[]>(`${environment.apiArticleUrl}concepts`, { headers })
+  }
+  
+  fetchArticlesReadyToPublish() {
+    let headers = new HttpHeaders();
+    headers = headers.set('Username', this.authService.getCurrentUser()!.name);
+    return this.http.get<Article[]>(`${environment.apiArticleUrl}publish-ready`, { headers }) 
   }
 
-  public submitArticle(articleData: Article): Observable<object> {
+  submitArticle(articleData: Article): Observable<object> {
     let headers = new HttpHeaders();
     headers = headers.set('Username', this.authService.getCurrentUser()!.name);
     if (articleData.id) {
       return this.http.put(`${environment.apiArticleUrl}${articleData.id}`, articleData, { headers });
     }
     return this.http.post(`${environment.apiArticleUrl}create`, articleData, { headers })
+  }
+
+  publishArticle(articleId: number, publish: boolean): Observable<object> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Username', this.authService.getCurrentUser()!.name);
+    return this.http.post(`${environment.apiArticleUrl}${articleId}/publish/article`, { publish }, { headers });
+  }
+
+  
+  deleteArticle(articleId: number) {
+    let headers = new HttpHeaders();
+    headers = headers.set('Username', this.authService.getCurrentUser()!.name);
+    return this.http.delete(`${environment.apiArticleUrl}${articleId}`,{ headers });
   }
 }

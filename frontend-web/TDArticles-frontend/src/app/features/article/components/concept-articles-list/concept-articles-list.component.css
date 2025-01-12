@@ -32,12 +32,12 @@ mat-card {
 
 mat-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(233, 233, 233, 0.15);
 }
 
 mat-card-header {
   padding: 12px;
-  background-color: #888176;
+  background-color: darkorange;
 }
 
 mat-card-title {
@@ -69,7 +69,13 @@ mat-card-content {
 mat-card-footer {
   padding: 8px 12px;
   font-size: 0.8rem;
-  background-color: #888176;
+  background-color: darkorange;
+}
+
+mat-card-actions > * {
+  color: white;
+  font-weight: 600;
+  --mdc-fab-container-color: rgb(167, 98, 15);
 }
 
 @media (max-width: 600px) {

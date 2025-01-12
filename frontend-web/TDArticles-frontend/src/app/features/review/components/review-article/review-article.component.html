@@ -6,20 +6,39 @@
         <mat-card-subtitle>{{ article.author}}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <p>
-          {{ article.content }}
-        </p>
+        <p>{{ article.content }}</p>
+
+        @if (showRejectionNotes) {
+          <mat-form-field appearance="outline" class="w-full mt-4 bg-cyan-700 rounded-lg" subscriptSizing="dynamic">
+            <mat-label>Rejection reason</mat-label>
+            <textarea 
+              matInput 
+              [(ngModel)]="rejectionNotes"
+              placeholder="Please explain why you are rejecting this article..."
+              rows="4"
+              required>
+            </textarea>
+          </mat-form-field>
+        }
       </mat-card-content>
+      
       <mat-card-actions class="flex justify-end gap-4">
-        <button mat-raised-button id="reject-button" (click)="submitReview(false)">
-          Reject
-        </button>
-        <button mat-raised-button id="approve-button" (click)="submitReview(true)">
-          Approve
-        </button>
+        @if (!showRejectionNotes) {
+          <button mat-raised-button class="reject-button" (click)="showRejectNotes()">
+            Reject
+          </button>
+          <button mat-raised-button id="approve-button" (click)="submitReview(true)">
+            Approve
+          </button>
+        } @else {
+          <button mat-raised-button 
+            class="reject-button" 
+            (click)="submitReview(false)"
+            [disabled]="!rejectionNotes.trim()">
+            Confirm Rejection
+          </button>
+        }
       </mat-card-actions>
     </mat-card>
-  }  
+  }
 </div>
-
-

@@ -32,7 +32,7 @@ export class ArticleItemComponent {
   onCardClick(event: MouseEvent): void {
     // Prevent navigation if clicking the edit button
     if (!(event.target as HTMLElement).closest('button')) {
-      this.router.navigate(['/article', this.article.id]);
+      this.router.navigate(['/article/read', this.article.id]);
     }
   }
 }

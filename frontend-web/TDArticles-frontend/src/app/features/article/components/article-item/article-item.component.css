@@ -3,8 +3,17 @@ mat-card {
 }
 
 mat-card:hover {
-    --mdc-elevated-card-container-color: rgb(177, 177, 177);
     cursor: pointer;
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+
+
+mat-card:hover {
+    --mdc-elevated-card-container-color: rgb(177, 177, 177);
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 mat-card-content {

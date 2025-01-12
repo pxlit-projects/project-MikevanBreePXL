@@ -50,7 +50,7 @@
   
     <!-- Existing articles list -->
     <div class="flex flex-col gap-4">
-        @if (articles.length === 0) {
+        @if (!loading && articles.length === 0) {
             <div class="flex flex-col items-center justify-center mt-10">
                 <mat-card class="example-card" appearance="outlined">
                     <mat-card-header>
@@ -58,6 +58,17 @@
                     </mat-card-header>
                     <mat-card-content>
                         <p>Please come back another time!</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        } @else if (articles.length === 0) {
+            <div class="flex flex-col items-center justify-center mt-10">
+                <mat-card class="example-card" appearance="outlined">
+                    <mat-card-header>
+                        <mat-card-title>Loading articles...</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>Please wait...</p>
                     </mat-card-content>
                 </mat-card>
             </div>

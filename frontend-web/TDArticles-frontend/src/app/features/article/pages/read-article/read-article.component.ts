@@ -7,17 +7,20 @@ import { ArticleComment } from '../../../../shared/models/article-comment.model'
 import { CommentItemComponent } from '../../../comments/components/comment-item/comment-item.component';
 import { CommentWriteComponent } from '../../../comments/components/comment-write/comment-write.component';
 import { ArticleItemComponent } from '../../components/article-item/article-item.component';
+import { BehaviorSubject } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-read-article',
   standalone: true,
-  imports: [ArticleItemComponent, CommentItemComponent, CommentWriteComponent],
+  imports: [ArticleItemComponent, CommentItemComponent, CommentWriteComponent, AsyncPipe],
   templateUrl: './read-article.component.html',
   styleUrl: './read-article.component.css'
 })
 export class ReadArticleComponent implements OnInit {
   articleId = 0;
-  article: Article | null = null;
+  private articleSubject = new BehaviorSubject<Article | null>(null);
+  article$ = this.articleSubject.asObservable();
   comments: ArticleComment[] = [];
 
   constructor(
@@ -35,8 +38,11 @@ export class ReadArticleComponent implements OnInit {
   private fetchArticle() {
     this.articleService.fetchArticleById(this.articleId)
       .subscribe({
-        next: (article: Article) => this.article = article,
-        error: (error) => console.error('Error getting article:', error)
+        next: (article: Article) => this.articleSubject.next(article),
+        error: (error) => {
+          console.error('Error getting article:', error);
+          this.articleSubject.next(null);
+        }
       });
   }
 

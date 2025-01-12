@@ -1,21 +1,32 @@
 <div class="concept-list w-full justify-center text-center">
-  @if (conceptArticles.length > 0) {
-    <h1>Articles in Concept</h1>
-    <div class="article-grid">
-      @for (article of conceptArticles; track article.id) {
-        <mat-card class="article-card" (click)="selectArticle(article)">
-          <mat-card-header>
-            <mat-card-title>{{ article.title }}</mat-card-title>
-            <mat-card-subtitle>Written by {{ article.author }}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <p>{{ article.content | slice:0:250 }}</p>
-          </mat-card-content>
-          <mat-card-footer>
-            <span>Created: {{ article.creationTime | date:'medium' }}</span>
-          </mat-card-footer>
-        </mat-card>
-      }
-    </div>
+  @if (articles$ | async; as articles) {
+    @if (articles.length > 0) {
+      <h1>Articles in Concept</h1>
+      <div class="article-grid">
+        @for (article of articles; track article.id) {
+          <mat-card class="article-card">
+            <mat-card-header (click)="selectArticle(article)">
+              <mat-card-title>{{ article.title }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content (click)="selectArticle(article)">
+              <p>{{ article.content | slice:0:250 }}</p>
+            </mat-card-content>
+            <mat-card-footer (click)="selectArticle(article)">
+              <span>Created: {{ article.creationTime | date:'medium' }}</span>
+            </mat-card-footer>
+            <mat-card-actions>
+              <button mat-fab extended color="warn" (click)="deleteArticle(article.id!)">
+                  <mat-icon>delete</mat-icon>
+                  @if (deleteLoading) {
+                    <mat-spinner diameter="20"></mat-spinner>
+                  } @else {
+                    delete
+                  }
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        }
+      </div>
+    }
   }
 </div>

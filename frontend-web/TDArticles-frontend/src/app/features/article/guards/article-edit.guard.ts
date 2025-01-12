@@ -21,7 +21,7 @@ export class ArticleEditGuard {
       map(article => {
         const isAuthor = article.author === this.authService.getCurrentUser()?.name;
         if (!isAuthor) {
-          this.router.navigate(['/article']);
+          this.router.navigate(['/article/']);
         }
         return isAuthor;
       })

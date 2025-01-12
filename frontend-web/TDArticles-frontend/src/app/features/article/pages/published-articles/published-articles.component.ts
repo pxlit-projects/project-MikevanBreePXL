@@ -34,6 +34,7 @@ import { ArticleItemComponent } from '../../components/article-item/article-item
   styleUrl: './published-articles.component.css'
 })
 export class PublishedArticlesComponent implements OnInit, OnDestroy {
+  loading = true;
   articles: Article[] = [];
   private destroy$ = new Subject<void>();
   filterForm: FormGroup;
@@ -77,7 +78,10 @@ export class PublishedArticlesComponent implements OnInit, OnDestroy {
   private loadArticles() {
     const filters: ArticleFilters = this.filterForm.value;
     this.articleService.fetchPublishedArticles(filters)
-      .subscribe(articles => this.articles = articles);
+      .subscribe(articles => {
+        this.articles = articles
+      });
+      this.loading = false;
   }
 
   /** Reference to the directive instance of the ripple. */

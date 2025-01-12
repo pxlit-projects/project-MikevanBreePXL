@@ -12,7 +12,6 @@ public interface ArticleClient {
 
     @GetMapping("/pending")
     List<ArticleResponse> getPendingArticles(@RequestHeader("Username") String username);
-
-    @PostMapping("{id}/publish")
-    ResponseEntity<Void> publishArticle(@PathVariable long id, @RequestBody Boolean approved, @RequestHeader("Username") String username);
+    @PostMapping("{id}/publish/review")
+    ResponseEntity<Void> publishReview(@PathVariable long id, @RequestBody Boolean approved);
 }

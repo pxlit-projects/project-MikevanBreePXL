@@ -1,7 +1,7 @@
-<div class="flex flex-col items-center w-full p-4">
-    <h1 class="text-2xl font-bold mb-6 text-center">Articles Pending Review</h1>
+<div class="flex flex-col items-center p-4">
+    <h1>Articles Pending Review</h1> 
 
-    <div class="w-full max-w-5xl">
+    <div class="w-full lg:max-w-[80vw] max-w-full">
         <mat-table [dataSource]="articles" class="w-full">
             <ng-container matColumnDef="title">
                 <mat-header-cell *matHeaderCellDef class="justify-center">Title</mat-header-cell>

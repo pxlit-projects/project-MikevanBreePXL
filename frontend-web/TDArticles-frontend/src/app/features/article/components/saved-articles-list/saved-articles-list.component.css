@@ -1,0 +1,26 @@
+.saved-list {
+    padding: 16px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    color: white;
+  }
+  
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    padding: 0;
+  }
+  
+  @media (max-width: 600px) {
+    .concept-list {
+      padding: 8px;
+    }
+    
+    mat-card {
+      height: 240px;
+    }
+  }
