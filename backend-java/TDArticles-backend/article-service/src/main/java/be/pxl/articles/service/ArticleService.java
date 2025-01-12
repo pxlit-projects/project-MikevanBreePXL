@@ -11,6 +11,8 @@ import be.pxl.articles.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Stream;
@@ -39,10 +41,14 @@ public class ArticleService implements IArticleService {
             articleStream = articleStream.filter(article -> article.getCreationTime().isBefore(to));
         }
         if (author != null) {
-            articleStream = articleStream.filter(article -> article.getAuthor().equals(author));
+            String authorUrlDecoded = URLDecoder.decode(author, StandardCharsets.UTF_8);
+            articleStream = articleStream.filter(article -> article.getAuthor().contains(authorUrlDecoded));
         }
         if (content != null) {
-            articleStream = articleStream.filter(article -> (article.getContent().contains(content) || article.getTitle().contains(content)));
+            String contentUrlDecoded = URLDecoder.decode(content, StandardCharsets.UTF_8).toLowerCase().trim();
+            articleStream = articleStream.filter(article ->
+                    article.getContent().toLowerCase().trim().contains(contentUrlDecoded) ||
+                            article.getTitle().toLowerCase().trim().contains(contentUrlDecoded));
         }
 
         return articleStream.map(article -> mapToArticleResponse(article))
@@ -112,10 +118,14 @@ public class ArticleService implements IArticleService {
         }
         article.setTitle(request.getTitle());
         article.setContent(request.getContent());
-        if (request.getConcept()) {
-            article.setStatus(Status.CONCEPT);
-        } else {
-            article.setStatus(Status.PENDING);
+
+        // POST Submission only -- checks concept update status
+        if (article.getStatus().equals(Status.CONCEPT)) {
+            if (request.getConcept()) {
+                article.setStatus(Status.CONCEPT);
+            } else {
+                article.setStatus(Status.PENDING);
+            }
         }
 
         articleRepository.save(article);

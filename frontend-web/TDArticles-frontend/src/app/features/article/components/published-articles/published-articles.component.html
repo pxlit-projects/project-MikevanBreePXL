@@ -1,25 +1,77 @@
-<div class="flex flex-col gap-4 mt-10">
-    @if (articles.length === 0) {
-        <div class="flex flex-col items-center justify-center mt-10">
-            <mat-card class="example-card" appearance="outlined">
-                <mat-card-header>
-                    <mat-card-title>No articles have been published yet...</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    <p>Please come back another time!</p>
-                </mat-card-content>
-            </mat-card>
-        </div>
-    }
-    @for (item of articles; track $index) {
-        <div
-            class="mx-auto cursor-pointer"
-            matRipple
-            [matRippleColor]="'#0008'"
-            [matRippleUnbounded]="false"
-            [routerLink]="'/article/' + item.id"
-        >
-            <app-article-item [article]="item"></app-article-item>
-        </div>
-    }
+<div class="container mx-auto mt-4">
+    <form [formGroup]="filterForm" class="bg-orange-500 rounded-lg shadow-md p-4 mb-6">
+      <div class="flex flex-wrap items-center gap-2">
+        <!-- Author Filter -->
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="flex-1 min-w-[200px]">
+          <mat-label>Author</mat-label>
+          <input matInput formControlName="author" placeholder="Filter by author">
+        </mat-form-field>
+        
+        <!-- Content Filter -->
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="flex-1 min-w-[200px]">
+          <mat-label>Content</mat-label>
+          <input matInput formControlName="content" placeholder="Filter by content">
+        </mat-form-field>
+  
+        <!-- Date Range -->
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="flex-1 min-w-[150px]">
+          <mat-label>Posted after...</mat-label>
+          <input matInput [matDatepicker]="fromPicker" formControlName="from">
+          <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+          <mat-datepicker #fromPicker></mat-datepicker>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="flex-1 min-w-[150px]">
+          <mat-label>Posted before...</mat-label>
+          <input matInput [matDatepicker]="toPicker" formControlName="to">
+          <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+          <mat-datepicker #toPicker></mat-datepicker>
+        </mat-form-field>
+  
+        <!-- Sort Controls -->
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="flex-1 min-w-[80px]">
+          <mat-label>Sort By</mat-label>
+          <mat-select formControlName="sortBy">
+            <mat-option value="date">Date</mat-option>
+            <mat-option value="author">Author</mat-option>
+            <mat-option value="title">Title</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="flex-1 min-w-[80px]">
+          <mat-label>Sort Direction</mat-label>
+          <mat-select formControlName="sortDirection">
+            <mat-option value="asc">Ascending</mat-option>
+            <mat-option value="desc">Descending</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+  
+    <!-- Existing articles list -->
+    <div class="flex flex-col gap-4">
+        @if (articles.length === 0) {
+            <div class="flex flex-col items-center justify-center mt-10">
+                <mat-card class="example-card" appearance="outlined">
+                    <mat-card-header>
+                        <mat-card-title>No articles have been published yet...</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>Please come back another time!</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        }
+        @for (item of articles; track $index) {
+            <div
+                class="mx-auto cursor-pointer"
+                matRipple
+                [matRippleColor]="'#0008'"
+                [matRippleUnbounded]="false"
+                [routerLink]="'/article/' + item.id"
+            >
+                <app-article-item [article]="item"></app-article-item>
+            </div>
+        }
+    </div>
 </div>
