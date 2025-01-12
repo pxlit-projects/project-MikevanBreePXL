@@ -38,4 +38,8 @@ export class EditArticleComponent implements OnInit {
         error: (error) => console.error('Error updating article:', error)
       });
   }
+
+  cancelEdit() {
+    this.router.navigate(['/article', this.route.snapshot.paramMap.get('id')]);
+  }
 }

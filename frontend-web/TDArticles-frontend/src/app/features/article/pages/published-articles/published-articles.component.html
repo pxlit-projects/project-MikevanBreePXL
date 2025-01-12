@@ -1,5 +1,5 @@
-<div class="container mx-auto mt-4">
-    <form [formGroup]="filterForm" class="bg-orange-500 rounded-bottom-lg shadow-md p-4 mb-6">
+<div class="container mx-auto">
+    <form [formGroup]="filterForm" class="bg-orange-500 rounded-b-lg	 shadow-md p-4 mb-6">
       <div class="flex flex-wrap items-center gap-2">
         <!-- Author Filter -->
         <mat-form-field appearance="outline" subscriptSizing="dynamic" class="flex-1 min-w-[200px]">
@@ -63,13 +63,7 @@
             </div>
         }
         @for (item of articles; track $index) {
-            <div
-                class="mx-auto cursor-pointer"
-                matRipple
-                [matRippleColor]="'#0008'"
-                [matRippleUnbounded]="false"
-                [routerLink]="'/article/' + item.id"
-            >
+            <div class="mx-auto">
                 <app-article-item [article]="item"></app-article-item>
             </div>
         }

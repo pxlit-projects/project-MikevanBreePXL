@@ -6,6 +6,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { Article } from '../../../../shared/models/article.model';
 import { AuthService } from '../../../auth/services/auth.service';
+import { BehaviorSubject } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 interface ArticleForm {
   id: number;
@@ -25,7 +27,8 @@ type FormField = keyof ArticleForm;
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
-    MatButtonModule
+    MatButtonModule,
+    AsyncPipe
   ],
   templateUrl: './article-creation-form.component.html',
   styleUrl: './article-creation-form.component.css'
@@ -40,6 +43,8 @@ export class ArticleCreationFormComponent implements OnInit {
         author: article.author,
         concept: article.concept
       });
+      this.formTitle$.next('Edit Article');
+      this.formSave$.next("Save");
     }
   }
   @Output() submitArticle = new EventEmitter<Article>();
@@ -51,7 +56,8 @@ export class ArticleCreationFormComponent implements OnInit {
   ) {
     this.articleForm = this.createForm();
   }
-
+  
+  formTitle$ = new BehaviorSubject<string>('Create New Article');
   articleForm: FormGroup;
   formErrors: Record<FormField, string> = {
     id: '',
@@ -60,6 +66,7 @@ export class ArticleCreationFormComponent implements OnInit {
     author: '',
     concept: ''
   };
+  formSave$ = new BehaviorSubject<string>("Create Article");
 
   validationMessages: Record<FormField, Record<string, string>> = {
     id: {},

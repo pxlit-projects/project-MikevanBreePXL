@@ -1,6 +1,7 @@
-<mat-card
+<mat-card mat-button
   class="article-card"
   appearance="raised"
+  (click)="onCardClick($event)"
 >
   <mat-card-header>
     <mat-card-title>{{ article.title }}</mat-card-title>
@@ -11,5 +12,14 @@
       {{ article.content }}
     </p>
   </mat-card-content>
+  @if(isAuthor()) {
+    <mat-card-actions>
+      <button mat-button
+        [routerLink]="['/article/edit/', article.id]">
+        <mat-icon>edit</mat-icon>
+        Edit
+      </button>
+    </mat-card-actions>
+  }
 </mat-card>
   

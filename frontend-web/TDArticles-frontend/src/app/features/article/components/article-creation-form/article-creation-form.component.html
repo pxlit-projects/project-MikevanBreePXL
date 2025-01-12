@@ -1,10 +1,7 @@
 <div class="form-container">
     <form [formGroup]="articleForm" (ngSubmit)="onSubmit()">
-        @if (selectedArticle) {
-            <h1>Edit Article</h1>
-        } @else {
-            <h1>Create New Article</h1>
-        }
+        <h1>{{ formTitle$ | async }}</h1>
+
 
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>Title</mat-label>
@@ -37,7 +34,7 @@
             id="create-button"
             type="submit"
             [disabled]="articleForm.invalid">
-            Create Article
+            {{ formSave$ | async }}
             </button>
         </div>
     </form>

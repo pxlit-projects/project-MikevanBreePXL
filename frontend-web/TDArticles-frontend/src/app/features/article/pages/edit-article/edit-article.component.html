@@ -1,6 +1,7 @@
 <div id="edit-article-container" class="mx-auto p-4">
     <app-article-creation-form 
       [selectedArticle]="selectedArticle$ | async"
-      (submitArticle)="editArticle($event)">
+      (submitArticle)="editArticle($event)"
+      (cancelEdit)="cancelEdit()">
     </app-article-creation-form>
   </div>

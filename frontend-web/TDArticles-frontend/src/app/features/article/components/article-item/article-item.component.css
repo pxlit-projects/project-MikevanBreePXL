@@ -2,6 +2,11 @@ mat-card {
     --mdc-elevated-card-container-color: white;
 }
 
+mat-card:hover {
+    --mdc-elevated-card-container-color: rgb(177, 177, 177);
+    cursor: pointer;
+}
+
 mat-card-content {
     padding-bottom: 16px;
 }
