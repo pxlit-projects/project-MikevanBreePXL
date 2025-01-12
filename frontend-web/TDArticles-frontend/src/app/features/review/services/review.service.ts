@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Article } from '../../../shared/models/article.model';
 import { environment } from '@env/environment';
 import { AuthService } from '../../auth/services/auth.service';
+import { Review } from '../../../shared/review.model';
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +41,11 @@ export class ReviewService {
       receiver,
       rejectionNotes
     }, { headers });
+  }
+
+  getReview(articleId: number): Observable<Review> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Username', this.authService.getCurrentUser()!.name);
+    return this.http.get<Review>(`${environment.apiReviewUrl}${articleId}`, { headers });
   }
 }

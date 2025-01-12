@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Article } from '../../../../shared/models/article.model';
 import { ArticleService } from '../../services/article.service';
-import { AuthService } from '../../../auth/services/auth.service';
 import { SavedArticleCardComponent } from '../saved-article-card/saved-article-card.component';
 import { RejectedArticleCardComponent } from '../rejected-article-card/rejected-article-card.component';
 import { CommonModule } from '@angular/common';
@@ -30,7 +29,7 @@ export class SavedArticlesListComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchArticlesReadyToPublish();
-    this.fetchFailedArticles();
+    this.fetchRejectedArticles();
   }
 
   private fetchArticlesReadyToPublish(): void {
@@ -43,7 +42,7 @@ export class SavedArticlesListComponent implements OnInit {
       });
   }
 
-  private fetchFailedArticles(): void {
+  private fetchRejectedArticles(): void {
     this.articleService.fetchRejectedArticles()
       .subscribe({
         next: (articles) => {

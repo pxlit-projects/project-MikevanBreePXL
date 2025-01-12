@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatRipple, MatRippleModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -21,7 +20,6 @@ import { ArticleItemComponent } from '../../components/article-item/article-item
   imports: [
     MatCardModule,
     MatRippleModule,
-    RouterLink,
     ArticleItemComponent,
     ReactiveFormsModule,
     MatFormFieldModule,

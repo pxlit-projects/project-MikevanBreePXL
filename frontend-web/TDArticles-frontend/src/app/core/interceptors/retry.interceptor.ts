@@ -4,7 +4,7 @@ import { retry, timer } from 'rxjs';
 const MAX_RETRIES = 3;
 const INITIAL_DELAY = 1000;
 
-const isRetryable = (error: any): boolean => {
+const isRetryable = (error: HttpErrorResponse): boolean => {
   if (error instanceof HttpErrorResponse) {
     return error.status === 0 || error.status === 408 || error.status === 500;
   }

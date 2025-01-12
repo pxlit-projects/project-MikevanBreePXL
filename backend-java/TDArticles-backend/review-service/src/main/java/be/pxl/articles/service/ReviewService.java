@@ -46,16 +46,16 @@ public class ReviewService {
                 .id(review.getId())
                 .articleId(review.getArticleId())
                 .approved(review.isApproved())
+                .rejectionNotes(review.getRejectionNotes())
                 .build();
     }
 
     private Review mapToEntity(Long articleId, ReviewRequest reviewRequest) {
         var reviewBuilder = Review.builder()
                 .articleId(articleId)
-                .approved(reviewRequest.isApproved());
-        if (!reviewRequest.isApproved()) {
-            reviewBuilder.rejectionNotes(reviewRequest.getRejectionNotes());
-        }
+                .approved(reviewRequest.isApproved())
+                .rejectionNotes(reviewRequest.getRejectionNotes());
+
         return reviewBuilder.build();
     }
 

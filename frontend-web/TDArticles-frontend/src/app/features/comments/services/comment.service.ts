@@ -5,12 +5,6 @@ import { environment } from '@env/environment';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '../../auth/services/auth.service';
 
-interface CommentRequest {
-  article_id: number;
-  author: string;
-  comment: string;
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -28,7 +22,7 @@ export class CommentService {
     let headers = new HttpHeaders();
     headers = headers.set('Username', this.authService.getCurrentUser()!.name);
     
-    let body = {
+    const body = {
       article_id: articleId,
       author: this.authService.getCurrentUser()!.name ,
       comment: commentText
@@ -41,7 +35,7 @@ export class CommentService {
     ).subscribe();
   }
   
-  deleteComment(commentId: number): Observable<Object> {
+  deleteComment(commentId: number): Observable<object> {
     let headers = new HttpHeaders();
     headers = headers.set('Username', this.authService.getCurrentUser()!.name);
     return this.http.delete(`${environment.apiCommentUrl}${commentId}`,{ headers });

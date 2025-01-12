@@ -13,4 +13,5 @@ public class ReviewResponse {
     private Long id;
     private Long articleId;
     private boolean approved;
+    private String rejectionNotes;
 }
