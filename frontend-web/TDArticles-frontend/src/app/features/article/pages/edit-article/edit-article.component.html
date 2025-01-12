@@ -2,6 +2,7 @@
     <app-article-creation-form 
       [selectedArticle]="selectedArticle$ | async"
       (submitArticle)="editArticle($event)"
-      (cancelEdit)="cancelEdit()">
+      (cancelEdit)="cancelEdit()"
+      [hideConceptCheckbox]="true">
     </app-article-creation-form>
   </div>

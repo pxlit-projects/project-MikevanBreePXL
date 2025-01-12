@@ -34,6 +34,7 @@ type FormField = keyof ArticleForm;
   styleUrl: './article-creation-form.component.css'
 })
 export class ArticleCreationFormComponent implements OnInit {
+  @Input() hideConceptCheckbox = false;
   @Input() set selectedArticle(article: Article | null) {
     if (article) {
       this.articleForm.patchValue({

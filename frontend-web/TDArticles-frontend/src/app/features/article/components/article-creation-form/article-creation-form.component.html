@@ -19,9 +19,11 @@
             }
         </mat-form-field>
 
-        <mat-checkbox formControlName="concept" class="mb-3">
-            Save as concept
-        </mat-checkbox>
+        @if (!hideConceptCheckbox) {
+            <mat-checkbox formControlName="concept" class="mb-3">
+                Save as concept
+            </mat-checkbox>
+        }
 
         <div class="button-row">
             <button mat-raised-button
