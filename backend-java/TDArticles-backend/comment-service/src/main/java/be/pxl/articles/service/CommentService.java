@@ -30,8 +30,8 @@ public class CommentService {
         return createDisplayResponseFromEntity(comment);
     }
 
-    public long saveComment(CommentSaveRequest saveCommentRequest) {
-        Comment newComment = createEntityFromSaveRequest(saveCommentRequest);
+    public long saveComment(CommentSaveRequest saveCommentRequest, String username) {
+        Comment newComment = createEntityFromSaveRequest(saveCommentRequest, username);
         return commentRepository.save(newComment).getId();
     }
 
@@ -47,16 +47,15 @@ public class CommentService {
                 .orElseThrow(() -> new CommentNotFoundException("Could not find comment with id: " + commentId));
 
         commentToEdit.setComment(commentEditRequest.getComment());
-        commentToEdit.setAuthor(commentEditRequest.getAuthor());
 
         commentRepository.save(commentToEdit);
     }
 
-    private Comment createEntityFromSaveRequest(CommentSaveRequest commentSaveRequest) {
+    private Comment createEntityFromSaveRequest(CommentSaveRequest commentSaveRequest, String username) {
         return Comment.builder()
                 .articleId(commentSaveRequest.getArticleId())
                 .comment(commentSaveRequest.getComment())
-                .author(commentSaveRequest.getAuthor())
+                .author(username)
                 .creationTime(LocalDateTime.now())
                 .build();
     }

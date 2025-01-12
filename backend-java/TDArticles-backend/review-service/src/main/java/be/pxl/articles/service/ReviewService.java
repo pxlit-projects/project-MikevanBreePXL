@@ -21,8 +21,8 @@ public class ReviewService {
     private final ArticleClient articleClient;
     private final RabbitTemplate rabbitTemplate;
 
-    public List<ArticleResponse> getPendingArticles() {
-        return articleClient.getPendingArticles()
+    public List<ArticleResponse> getPendingArticles(String username) {
+        return articleClient.getPendingArticles(username)
                 .stream()
                 .filter(article -> reviewRepository.findAllByArticleId(article.getId()).isEmpty())
                 .toList();
@@ -33,11 +33,11 @@ public class ReviewService {
                 .orElseThrow(() -> new ReviewNotFoundException("Review with article id " + articleId + " not found")));
     }
 
-    public Long postReview(Long articleId, ReviewRequest reviewRequest) {
+    public Long postReview(Long articleId, ReviewRequest reviewRequest, String username) {
         Review review = mapToEntity(articleId, reviewRequest);
-        articleClient.publishArticle(articleId, reviewRequest.isApproved());
+        articleClient.publishArticle(articleId, reviewRequest.isApproved(), username);
 
-        sendNotification(articleId, reviewRequest);
+        sendNotification(articleId, reviewRequest, username);
 
         return reviewRepository.save(review).getId();
     }
@@ -57,9 +57,9 @@ public class ReviewService {
                 .build();
     }
 
-    private void sendNotification(Long articleId, ReviewRequest reviewRequest) {
+    private void sendNotification(Long articleId, ReviewRequest reviewRequest, String reviewer) {
         NotificationRequest.NotificationRequestBuilder notificationRequest = NotificationRequest.builder()
-                .sender(reviewRequest.getReviewer())
+                .sender(reviewer)
                 .receiver(reviewRequest.getReceiver());
 
         StringBuilder message = new StringBuilder("Review ");

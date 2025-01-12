@@ -21,6 +21,11 @@ public class ArticleController {
     private final IArticleService articleService;
     private final CommentClient commentClient;
 
+    @ModelAttribute
+    public void addAttributes(@RequestHeader("Username") String username) {
+        // You can store the username in a field or use it as needed
+    }
+
     @GetMapping
     public ResponseEntity<List<ArticleResponse>> getPublishedArticles(
             @RequestParam(required = false) LocalDateTime from,
@@ -49,9 +54,9 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ArticleResponse> getArticleById(@PathVariable long id) {
+    public ResponseEntity<ArticleResponse> getArticleById(@PathVariable long id, @RequestHeader("Username") String username) {
         ArticleResponse article = articleService.getArticle(id);
-        article.setComments(commentClient.getAllCommentsFromArticle(id));
+        article.setComments(commentClient.getAllCommentsFromArticle(id, username));
 
         return ResponseEntity.ok(article);
     }

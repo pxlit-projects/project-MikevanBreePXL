@@ -13,6 +13,4 @@ import lombok.NoArgsConstructor;
 public class CommentEditRequest {
     @NotBlank
     private String comment;
-    @NotBlank
-    private String author;
 }

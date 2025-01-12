@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Article } from '../../../shared/models/article.model';
 import { environment } from '@env/environment';
@@ -14,18 +14,23 @@ export class ReviewService {
   ) { }
 
   getPendingArticles(): Observable<Article[]> {
-    return this.http.get<Article[]>(`${environment.apiReviewUrl}`);
+    let headers = new HttpHeaders();
+    headers = headers.set('Username', this.authService.getCurrentUser()!.name);
+    return this.http.get<Article[]>(`${environment.apiReviewUrl}`, { headers });
   }
 
   getArticle(articleId: number): Observable<Article> {
-    return this.http.get<Article>(`${environment.apiReviewUrl}${articleId}`);
+    let headers = new HttpHeaders();
+    headers = headers.set('Username', this.authService.getCurrentUser()!.name)
+    return this.http.get<Article>(`${environment.apiReviewUrl}${articleId}`, { headers});
   }
 
   submitReview(articleId: number, approved: boolean, receiver: string): Observable<void> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Username', this.authService.getCurrentUser()!.name)
     return this.http.post<void>(`${environment.apiReviewUrl}${articleId}`, {
       approved,
-      reviewer: this.authService.getCurrentUser()?.name,
       receiver
-    });
+    }, { headers });
   }
 }

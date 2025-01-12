@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReviewRequest {
     private boolean approved;
-    private String reviewer;
     private String receiver;
 }

@@ -5,6 +5,7 @@ import be.pxl.articles.controller.response.ArticleResponse;
 import be.pxl.articles.controller.response.ReviewResponse;
 import be.pxl.articles.service.ReviewService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,18 +20,18 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping
-    public List<ArticleResponse> getPendingReviews() {
-        return reviewService.getPendingArticles();
+    public List<ArticleResponse> getPendingReviews(@NotNull @RequestHeader("Username") String username) {
+        return reviewService.getPendingArticles(username);
     }
 
     @GetMapping("/{articleId}")
-    public ReviewResponse getReview(@PathVariable Long articleId) {
+    public ReviewResponse getReview(@PathVariable Long articleId, @NotNull @RequestHeader("Username") String username) {
         return reviewService.getReviewByArticleId(articleId);
     }
 
     @PostMapping("/{articleId}")
-    public ResponseEntity<Void> postReview(@PathVariable Long articleId, @Valid @RequestBody ReviewRequest reviewRequest) {
-        long createdReviewId = reviewService.postReview(articleId, reviewRequest);
+    public ResponseEntity<Void> postReview(@PathVariable Long articleId, @Valid @RequestBody ReviewRequest reviewRequest, @NotNull @RequestHeader("Username") String username) {
+        long createdReviewId = reviewService.postReview(articleId, reviewRequest, username);
         return ResponseEntity.created(URI.create("/review/" + createdReviewId)).build();
     }
 }

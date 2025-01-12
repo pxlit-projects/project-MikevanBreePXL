@@ -3,10 +3,7 @@ package be.pxl.articles.client;
 import be.pxl.articles.controller.response.ArticleResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,8 +11,8 @@ import java.util.List;
 public interface ArticleClient {
 
     @GetMapping("/pending")
-    List<ArticleResponse> getPendingArticles();
+    List<ArticleResponse> getPendingArticles(@RequestHeader("Username") String username);
 
     @PostMapping("{id}/publish")
-    ResponseEntity<Void> publishArticle(@PathVariable long id, @RequestBody Boolean approved);
+    ResponseEntity<Void> publishArticle(@PathVariable long id, @RequestBody Boolean approved, @RequestHeader("Username") String username);
 }

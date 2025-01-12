@@ -19,11 +19,16 @@ export class CommentService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   public fetchComments(articleId: number): Observable<ArticleComment[]> {
-    return this.http.get<ArticleComment[]>(`${environment.apiCommentUrl}article/${articleId}`);
+    let headers = new HttpHeaders();
+    headers = headers.set('Username', this.authService.getCurrentUser()!.name);
+    return this.http.get<ArticleComment[]>(`${environment.apiCommentUrl}article/${articleId}`, { headers });
   }
 
   sendComment(articleId: number, commentText: string): Subscription {
-    const payload: CommentRequest = {
+    let headers = new HttpHeaders();
+    headers = headers.set('Username', this.authService.getCurrentUser()!.name);
+    
+    let body = {
       article_id: articleId,
       author: this.authService.getCurrentUser()!.name ,
       comment: commentText
@@ -31,12 +36,8 @@ export class CommentService {
 
     return this.http.post(
       `${environment.apiCommentUrl}`, 
-      payload,
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json'
-        })
-      }
+      body,
+      { headers }
     ).subscribe();
   }
 }

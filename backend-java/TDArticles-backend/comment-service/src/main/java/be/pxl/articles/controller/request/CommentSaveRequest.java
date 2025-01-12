@@ -15,6 +15,4 @@ public class CommentSaveRequest {
     private Long articleId;
     @NotBlank
     private String comment;
-    @NotBlank
-    private String author;
 }
