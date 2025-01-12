@@ -7,4 +7,12 @@
         }
       </div>
     }
+    @if (articlesRejected.length > 0) {
+      <h1>Articles to review</h1>
+      <div class="article-grid">
+        @for (article of articlesRejected; track article.id) {
+          <app-rejected-article-card [article]="article" (articleSelected)="editArticle($event)"/>
+        }
+      </div>
+    }
   </div>

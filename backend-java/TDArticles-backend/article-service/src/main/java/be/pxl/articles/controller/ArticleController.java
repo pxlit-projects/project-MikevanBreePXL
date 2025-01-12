@@ -54,6 +54,11 @@ public class ArticleController {
         return articleService.getReadyToPublishArticles(author);
     }
 
+    @GetMapping("/review")
+    public List<ArticleResponse> getRejectedArticles(@RequestHeader("Username") String author) {
+        return articleService.getRejectedArticles(author);
+    }
+
     @GetMapping("/concepts")
     public List<ArticleResponse> getConceptArticlesByAuthor(@RequestHeader("Username") String author) {
         return articleService.getConcepts(author);

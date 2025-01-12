@@ -61,8 +61,7 @@ mat-card-content {
   overflow: hidden;
   font-size: 1rem;
   line-height: 1.4;
-  background-color: #212121;
-  color: white;
+  background-color: whitesmoke;
   text-align: start;
 }
 

@@ -72,6 +72,14 @@ public class ArticleService implements IArticleService {
     }
 
     @Override
+    public List<ArticleResponse> getRejectedArticles(String author) {
+        return articleRepository.findAllByAuthor(author).stream()
+                .filter(article -> article.getStatus().equals(Status.DENIED))
+                .map(article -> mapToArticleResponse(article))
+                .toList();
+    }
+
+    @Override
     public void publishReview(long id, boolean approved) {
         Article article = articleRepository.findById(id).orElseThrow(() -> new ArticleNotFoundException("Could not find article with id " + id));
         if (approved) {

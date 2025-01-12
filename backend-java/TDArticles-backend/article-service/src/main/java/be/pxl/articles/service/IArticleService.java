@@ -16,6 +16,7 @@ public interface IArticleService {
     List<ArticleResponse> getConcepts(String author);
     List<ArticleResponse> getPendingArticles();
     List<ArticleResponse> getReadyToPublishArticles(String author);
+    List<ArticleResponse> getRejectedArticles(String author);
     void publishReview(long id, boolean approved);
     void publishArticle(long id, boolean published, String username);
     void deleteArticle(long id, String username);

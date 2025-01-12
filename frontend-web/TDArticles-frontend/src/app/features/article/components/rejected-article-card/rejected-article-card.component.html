@@ -1,0 +1,21 @@
+<mat-card class="article-card">
+  <mat-card-header (click)="selectArticle(article)">
+    <mat-card-title>{{ article.title }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content (click)="selectArticle(article)">
+    <p>{{ article.content | slice:0:250 }}</p>
+  </mat-card-content>
+  <mat-card-footer (click)="selectArticle(article)">
+    <span>Created: {{ article.creationTime | date:'medium' }}</span>
+  </mat-card-footer>
+  <mat-card-actions>
+    <button mat-fab extended color="warn" (click)="deleteArticle(article.id!)">
+        <mat-icon>delete</mat-icon>
+        @if (deleteLoading) {
+          <mat-spinner diameter="20"></mat-spinner>
+        } @else {
+          delete
+        }
+    </button>
+  </mat-card-actions>
+</mat-card>

@@ -80,6 +80,12 @@ export class ArticleService {
     headers = headers.set('Username', this.authService.getCurrentUser()!.name);
     return this.http.get<Article[]>(`${environment.apiArticleUrl}publish-ready`, { headers }) 
   }
+  
+  fetchRejectedArticles() {
+    let headers = new HttpHeaders();
+    headers = headers.set('Username', this.authService.getCurrentUser()!.name);
+    return this.http.get<Article[]>(`${environment.apiArticleUrl}review`, { headers })
+  }
 
   submitArticle(articleData: Article): Observable<object> {
     let headers = new HttpHeaders();

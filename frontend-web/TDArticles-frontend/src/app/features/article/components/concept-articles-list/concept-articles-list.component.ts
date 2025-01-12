@@ -67,6 +67,6 @@ export class ConceptArticlesListComponent implements OnInit, OnDestroy {
       this.deleteLoading = false;
       this.fetchConceptArticles();
       console.log("Redirecting!");
-    }, 1000);
+    }, 500);
   }
 }
