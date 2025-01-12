@@ -14,14 +14,14 @@
         </mat-form-field>
   
         <!-- Date Range -->
-        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="flex-1 min-w-[150px]">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="flex-1 min-w-[150px] wrap-label">
           <mat-label>Posted after...</mat-label>
           <input matInput [matDatepicker]="fromPicker" formControlName="from">
           <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
           <mat-datepicker #fromPicker></mat-datepicker>
         </mat-form-field>
   
-        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="flex-1 min-w-[150px]">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="flex-1 min-w-[150px] wrap-label">
           <mat-label>Posted before...</mat-label>
           <input matInput [matDatepicker]="toPicker" formControlName="to">
           <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
