@@ -8,7 +8,7 @@ services:
       - "5672:5672"
       - "15672:15672"
     networks:
-      - cloudservice-network
+      - tdarticles-network
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
 
@@ -21,7 +21,7 @@ services:
       MYSQL_ROOT_PASSWORD: toor
       MYSQL_DATABASE: db_articleservice
     networks:
-      - cloudservice-network
+      - tdarticles-network
     volumes:
       - db_articleservice_data:/var/lib/mysql
 
@@ -34,7 +34,7 @@ services:
       MYSQL_ROOT_PASSWORD: toor
       MYSQL_DATABASE: db_reviewservice
     networks:
-      - cloudservice-network
+      - tdarticles-network
     volumes:
       - db_reviewservice_data:/var/lib/mysql
 
@@ -47,7 +47,7 @@ services:
       MYSQL_ROOT_PASSWORD: toor
       MYSQL_DATABASE: db_commentservice
     networks:
-      - cloudservice-network
+      - tdarticles-network
     volumes:
       - db_commentservice_data:/var/lib/mysql
 
