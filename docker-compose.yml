@@ -1,1 +1,74 @@
-# This file will contain a script in orde to start up the system (all microservices) 
+# This file will contain a script in orde to start up the system (all microservices) services:
+name: SpringCloud
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - cloudservice-network
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  db_articleservice:
+    container_name: db_articleservice
+    image: mariadb:latest
+    ports:
+      - "3316:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: db_articleservice
+    networks:
+      - cloudservice-network
+    volumes:
+      - db_articleservice_data:/var/lib/mysql
+
+  db_reviewservice:
+    container_name: db_reviewservice
+    image: mariadb:latest
+    ports:
+      - "3326:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: db_reviewservice
+    networks:
+      - cloudservice-network
+    volumes:
+      - db_reviewservice_data:/var/lib/mysql
+
+  db_commentservice:
+    container_name: db_commentservice
+    image: mariadb:latest
+    ports:
+      - "3336:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: db_commentservice
+    networks:
+      - cloudservice-network
+    volumes:
+      - db_commentservice_data:/var/lib/mysql
+
+  frontend:
+    build:
+      context: ./frontend-web/TDArticles-frontend/
+      dockerfile: Dockerfile
+    environment:
+      - API_GATEWAY_URL=http://localhost:8090/
+    ports:
+      - "80:80"
+    networks:
+      - tdarticles-network
+
+volumes:
+  rabbitmq_data:
+  db_articleservice_data:
+  db_reviewservice_data:
+  db_commentservice_data:
+
+
+networks:
+  tdarticles-network:
+    driver: bridge
