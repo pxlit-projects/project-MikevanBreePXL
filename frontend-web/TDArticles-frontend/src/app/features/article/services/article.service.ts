@@ -93,7 +93,7 @@ export class ArticleService {
   publishArticle(articleId: number, publish: boolean): Observable<object> {
     let headers = new HttpHeaders();
     headers = headers.set('Username', this.authService.getCurrentUser()!.name);
-    return this.http.post(`${environment.apiArticleUrl}${articleId}/publish/article`, { publish }, { headers });
+    return this.http.post(`${environment.apiArticleUrl}${articleId}/publish/article`, publish, { headers });
   }
 
   

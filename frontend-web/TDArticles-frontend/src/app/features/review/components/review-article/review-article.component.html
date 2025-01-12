@@ -32,6 +32,11 @@
           </button>
         } @else {
           <button mat-raised-button 
+            id="cancel-reject-button" 
+            (click)="cancelRejection()">
+            Cancel
+          </button>
+          <button mat-raised-button 
             class="reject-button" 
             (click)="submitReview(false)"
             [disabled]="!rejectionNotes.trim()">

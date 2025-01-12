@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Article } from '../../../../shared/models/article.model';
 import { MatIcon } from '@angular/material/icon';
 import { ArticleService } from '../../services/article.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-saved-article-card',
@@ -16,12 +17,15 @@ export class SavedArticleCardComponent {
 @Input() article!: Article;
 @Input() rejectionNotes?: string;
 
-  constructor(private articleService: ArticleService) { }
+  constructor(
+    private router: Router,
+    private articleService: ArticleService
+  ) {}
   
   submitPublish() {
     this.articleService.publishArticle(this.article.id!, true)
       .subscribe(() => {
-        console.log('Article published');
+        this.router.navigate(['/article']);
       });
   }
 }

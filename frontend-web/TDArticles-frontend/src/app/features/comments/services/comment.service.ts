@@ -40,4 +40,10 @@ export class CommentService {
       { headers }
     ).subscribe();
   }
+  
+  deleteComment(commentId: number): Observable<Object> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Username', this.authService.getCurrentUser()!.name);
+    return this.http.delete(`${environment.apiCommentUrl}${commentId}`,{ headers });
+  }
 }

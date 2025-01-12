@@ -9,6 +9,7 @@ import { CommentWriteComponent } from '../../../comments/components/comment-writ
 import { ArticleItemComponent } from '../../components/article-item/article-item.component';
 import { BehaviorSubject } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-read-article',
@@ -21,9 +22,11 @@ export class ReadArticleComponent implements OnInit {
   articleId = 0;
   private articleSubject = new BehaviorSubject<Article | null>(null);
   article$ = this.articleSubject.asObservable();
-  comments: ArticleComment[] = [];
+  private commentsSubject = new BehaviorSubject<ArticleComment[]>([]);
+  comments$ = this.commentsSubject.asObservable();
 
   constructor(
+    private authService: AuthService,
     private articleService: ArticleService,
     private commentService: CommentService,
     private route: ActivatedRoute
@@ -48,15 +51,19 @@ export class ReadArticleComponent implements OnInit {
 
   private fetchComments() {
     this.commentService.fetchComments(this.articleId)
-    .subscribe({
-      next: (comments: ArticleComment[]) => this.comments = comments,
-      error: (error) => console.error('Error getting comments:', error)
-    });
+      .subscribe({
+        next: (comments: ArticleComment[]) => this.commentsSubject.next(comments),
+        error: (error) => console.error('Error getting comments:', error)
+      });
   }
   
   onCommentSubmitted($event: string) {
-    console.log('Comment submitted:', $event);
-    this.commentService.sendComment(this.articleId, $event);
-    this.fetchComments();
+    this.commentService.sendComment(this.articleId, $event)
+      .add(() => this.fetchComments());
+  }
+  
+  onDeleteComment(commentId: number) {
+    this.commentService.deleteComment(commentId).subscribe()
+      .add(() => this.fetchComments());
   }
 }

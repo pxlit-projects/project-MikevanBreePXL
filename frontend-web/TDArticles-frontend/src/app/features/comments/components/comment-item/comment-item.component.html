@@ -2,8 +2,13 @@
   class="comment-card"
   appearance="raised"
 >
-  <mat-card-header>
+  <mat-card-header class="flex justify-between items-center">
     <mat-card-subtitle>{{ comment.author }}</mat-card-subtitle>
+    @if (comment.author === this.authService.getCurrentUser()!.name) {
+      <button mat-mini-fab (click)="handleDeleteComment()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    }
   </mat-card-header>
   <mat-card-content>
     <p>

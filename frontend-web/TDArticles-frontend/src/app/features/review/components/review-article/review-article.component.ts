@@ -57,4 +57,10 @@ export class ReviewArticleComponent implements OnInit {
         this.router.navigate(['/review']);
       });
   }
+
+  
+  cancelRejection() {
+    this.rejectionNotes = '';
+    this.showRejectionNotes = false;
+  }
 }

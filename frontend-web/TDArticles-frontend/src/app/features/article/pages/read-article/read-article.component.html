@@ -3,8 +3,12 @@
     <app-article-item [article]="article"></app-article-item>
     <app-comment-write class="my-2 comment-card" (commentSubmitted)="onCommentSubmitted($event)"></app-comment-write>
     <div class="comments gap-2">
-        @for (comment of this.comments; track $index) {
-            <app-comment-item class="comment-card" [comment]="comment"></app-comment-item>
+        @for (comment of comments$ | async; track comment.id) {
+            <app-comment-item
+                class="comment-card"
+                [comment]="comment"
+                (deleteComment)="onDeleteComment(comment.id!)"
+            />
         }
     </div>
 } @else {

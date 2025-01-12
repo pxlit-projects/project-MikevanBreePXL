@@ -28,6 +28,13 @@ export class ReviewService {
   submitReview(articleId: number, approved: boolean, receiver: string, rejectionNotes?: string): Observable<void> {
     let headers = new HttpHeaders();
     headers = headers.set('Username', this.authService.getCurrentUser()!.name)
+
+    console.log({
+      approved,
+      receiver,
+      rejectionNotes
+    });
+
     return this.http.post<void>(`${environment.apiReviewUrl}${articleId}`, {
       approved,
       receiver,
