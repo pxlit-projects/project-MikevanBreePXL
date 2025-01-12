@@ -34,8 +34,8 @@ public class ReviewService {
 
     public Long postReview(Long articleId, ReviewRequest reviewRequest, String username) {
         Review review = mapToEntity(articleId, reviewRequest);
-        articleClient.publishReview(articleId, reviewRequest.isApproved());
 
+        articleClient.publishReview(articleId, username, reviewRequest.isApproved());
         sendNotification(articleId, reviewRequest, username);
 
         return reviewRepository.save(review).getId();

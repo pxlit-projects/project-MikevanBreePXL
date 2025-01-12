@@ -9,9 +9,13 @@ import java.util.List;
 
 @FeignClient(name = "article-service")
 public interface ArticleClient {
-
     @GetMapping("/pending")
     List<ArticleResponse> getPendingArticles(@RequestHeader("Username") String username);
-    @PostMapping("{id}/publish/review")
-    ResponseEntity<Void> publishReview(@PathVariable long id, @RequestBody Boolean approved);
+
+    @PostMapping("/{id}/publish/review")
+    ResponseEntity<Void> publishReview(
+            @PathVariable("id") long id,
+            @RequestHeader("Username") String username,
+            @RequestBody Boolean approved
+    );
 }
