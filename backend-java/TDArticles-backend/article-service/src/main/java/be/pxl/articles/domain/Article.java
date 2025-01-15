@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder(toBuilder = true)
 public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

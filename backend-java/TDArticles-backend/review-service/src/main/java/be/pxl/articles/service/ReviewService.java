@@ -16,22 +16,25 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ReviewService {
+public class ReviewService implements IReviewService {
     private final ReviewRepository reviewRepository;
     private final ArticleClient articleClient;
     private final RabbitTemplate rabbitTemplate;
 
+    @Override
     public List<ArticleResponse> getPendingArticles(String username) {
         return articleClient.getPendingArticles(username)
                 .stream()
                 .toList();
     }
 
+    @Override
     public ReviewResponse getReviewByArticleId(Long articleId) {
         return mapToReviewResponse(reviewRepository.findAllByArticleId(articleId).stream().findFirst()
                 .orElseThrow(() -> new ReviewNotFoundException("Review with article id " + articleId + " not found")));
     }
 
+    @Override
     public Long postReview(Long articleId, ReviewRequest reviewRequest, String username) {
         Review review = mapToEntity(articleId, reviewRequest);
 
@@ -59,7 +62,8 @@ public class ReviewService {
         return reviewBuilder.build();
     }
 
-    private void sendNotification(Long articleId, ReviewRequest reviewRequest, String reviewer) {
+    @Override
+    public void sendNotification(Long articleId, ReviewRequest reviewRequest, String reviewer) {
         var notificationRequest = NotificationRequest.builder()
                 .sender(reviewer)
                 .receiver(reviewRequest.getReceiver());

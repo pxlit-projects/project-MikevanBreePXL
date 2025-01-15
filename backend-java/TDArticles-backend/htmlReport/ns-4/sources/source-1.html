@@ -1,0 +1,202 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ArticleController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">be.pxl.articles.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: ArticleController (be.pxl.articles.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ArticleController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    76.9%
+  </span>
+  <span class="absValue">
+    (10/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    71.4%
+  </span>
+  <span class="absValue">
+    (15/21)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package be.pxl.articles.controller;
+&nbsp;
+&nbsp;import be.pxl.articles.client.CommentClient;
+&nbsp;import be.pxl.articles.controller.request.CreateArticleRequest;
+&nbsp;import be.pxl.articles.controller.request.EditArticleRequest;
+&nbsp;import be.pxl.articles.controller.response.ArticleResponse;
+&nbsp;import be.pxl.articles.service.IArticleService;
+&nbsp;import jakarta.validation.Valid;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import org.springframework.format.annotation.DateTimeFormat;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.net.URI;
+&nbsp;import java.time.LocalDateTime;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@RestController
+<b class="fc">&nbsp;@RequiredArgsConstructor</b>
+&nbsp;@RequestMapping(&quot;/&quot;)
+&nbsp;public class ArticleController {
+&nbsp;    private final IArticleService articleService;
+&nbsp;    private final CommentClient commentClient;
+&nbsp;
+&nbsp;    @ModelAttribute
+&nbsp;    public void addAttributes(@RequestHeader(&quot;Username&quot;) String username) {
+&nbsp;        // You can store the username in a field or use it as needed
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @GetMapping
+&nbsp;    public ResponseEntity&lt;List&lt;ArticleResponse&gt;&gt; getPublishedArticles(
+&nbsp;            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+&nbsp;            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
+&nbsp;            @RequestParam(required = false) String author,
+&nbsp;            @RequestParam(required = false) String content
+&nbsp;    ) {
+<b class="fc">&nbsp;        List&lt;ArticleResponse&gt; articles = articleService.getPublishedArticles(from, to, author, content);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(articles);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/pending&quot;)
+&nbsp;    public List&lt;ArticleResponse&gt; getPendingArticles() {
+<b class="fc">&nbsp;        return articleService.getPendingArticles();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/publish-ready&quot;)
+&nbsp;    public List&lt;ArticleResponse&gt; getReadyToPublishArticles(@RequestHeader(&quot;Username&quot;) String author) {
+<b class="fc">&nbsp;        return articleService.getReadyToPublishArticles(author);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/review&quot;)
+&nbsp;    public List&lt;ArticleResponse&gt; getRejectedArticles(@RequestHeader(&quot;Username&quot;) String author) {
+<b class="fc">&nbsp;        return articleService.getRejectedArticles(author);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/concepts&quot;)
+&nbsp;    public List&lt;ArticleResponse&gt; getConceptArticlesByAuthor(@RequestHeader(&quot;Username&quot;) String author) {
+<b class="fc">&nbsp;        return articleService.getConcepts(author);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;ArticleResponse&gt; getArticleById(@PathVariable long id, @RequestHeader(&quot;Username&quot;) String username) {
+<b class="fc">&nbsp;        ArticleResponse article = articleService.getArticle(id);</b>
+<b class="fc">&nbsp;        article.setComments(commentClient.getAllCommentsFromArticle(id, username));</b>
+&nbsp;
+<b class="fc">&nbsp;        return ResponseEntity.ok(article);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/create&quot;)
+&nbsp;    public ResponseEntity&lt;Void&gt; createArticle(@Valid @RequestBody CreateArticleRequest request) {
+<b class="fc">&nbsp;        long createdArticleId = articleService.createArticle(request);</b>
+<b class="fc">&nbsp;        return ResponseEntity.created(URI.create(&quot;/article/&quot; + createdArticleId)).build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;{id}/publish/review&quot;)
+&nbsp;    public ResponseEntity&lt;Void&gt; publishReview(@PathVariable long id, @RequestBody Boolean approved) {
+<b class="fc">&nbsp;        articleService.publishReview(id, approved);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok().build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;{id}/publish/article&quot;)
+&nbsp;    public ResponseEntity&lt;Void&gt; publishArticle(@PathVariable long id, @RequestBody Boolean publish, @RequestHeader(&quot;Username&quot;) String username) {
+<b class="nc">&nbsp;        articleService.publishArticle(id, publish, username);</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok().build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PutMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;Void&gt; editArticle(@PathVariable long id, @Valid @RequestBody EditArticleRequest request) {
+<b class="nc">&nbsp;        articleService.editArticle(id, request);</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok().build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;Void&gt; deleteArticle(@PathVariable long id, @RequestHeader(&quot;Username&quot;) String username) {
+<b class="nc">&nbsp;        articleService.deleteArticle(id, username);</b>
+<b class="nc">&nbsp;        return ResponseEntity.noContent().build();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-01-15 04:00</div>
+</div>
+</body>
+</html>

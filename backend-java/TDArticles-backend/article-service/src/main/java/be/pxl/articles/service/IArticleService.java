@@ -10,7 +10,6 @@ import java.util.List;
 public interface IArticleService {
     List<ArticleResponse> getPublishedArticles(LocalDateTime from, LocalDateTime to, String author, String content);
     ArticleResponse getArticle(long id);
-    List<ArticleResponse> getArticlesByAuthor(String author);
     long createArticle(CreateArticleRequest request);
     void editArticle(long id, EditArticleRequest request);
     List<ArticleResponse> getConcepts(String author);

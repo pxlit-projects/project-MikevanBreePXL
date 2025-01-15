@@ -38,12 +38,6 @@ public class ArticleController {
         return ResponseEntity.ok(articles);
     }
 
-    @GetMapping("/author/{author}")
-    public ResponseEntity<List<ArticleResponse>> getPublishedArticlesByAuthor(@PathVariable String author) {
-        List<ArticleResponse> articles = articleService.getArticlesByAuthor(author);
-        return ResponseEntity.ok(articles);
-    }
-
     @GetMapping("/pending")
     public List<ArticleResponse> getPendingArticles() {
         return articleService.getPendingArticles();

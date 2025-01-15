@@ -1,0 +1,90 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > IArticleService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">be.pxl.articles.service</a>
+</div>
+
+<h1>Coverage Summary for Class: IArticleService (be.pxl.articles.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">IArticleService</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package be.pxl.articles.service;
+&nbsp;
+&nbsp;import be.pxl.articles.controller.request.CreateArticleRequest;
+&nbsp;import be.pxl.articles.controller.request.EditArticleRequest;
+&nbsp;import be.pxl.articles.controller.response.ArticleResponse;
+&nbsp;
+&nbsp;import java.time.LocalDateTime;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public interface IArticleService {
+&nbsp;    List&lt;ArticleResponse&gt; getPublishedArticles(LocalDateTime from, LocalDateTime to, String author, String content);
+&nbsp;    ArticleResponse getArticle(long id);
+&nbsp;    long createArticle(CreateArticleRequest request);
+&nbsp;    void editArticle(long id, EditArticleRequest request);
+&nbsp;    List&lt;ArticleResponse&gt; getConcepts(String author);
+&nbsp;    List&lt;ArticleResponse&gt; getPendingArticles();
+&nbsp;    List&lt;ArticleResponse&gt; getReadyToPublishArticles(String author);
+&nbsp;    List&lt;ArticleResponse&gt; getRejectedArticles(String author);
+&nbsp;    void publishReview(long id, boolean approved);
+&nbsp;    void publishArticle(long id, boolean published, String username);
+&nbsp;    void deleteArticle(long id, String username);
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-01-15 04:00</div>
+</div>
+</body>
+</html>

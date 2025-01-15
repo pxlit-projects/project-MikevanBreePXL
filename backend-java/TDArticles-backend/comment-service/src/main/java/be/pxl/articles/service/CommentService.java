@@ -14,15 +14,17 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CommentService {
+public class CommentService implements ICommentService {
     private final CommentRepository commentRepository;
 
+    @Override
     public List<CommentDisplayResponse> getAllCommentsFromArticle(long articleId) {
         return commentRepository.findAllByArticleId(articleId).stream()
                 .map(this::createDisplayResponseFromEntity)
                 .toList();
     }
 
+    @Override
     public CommentDisplayResponse getCommentFromId(Long commentId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new CommentNotFoundException("Could not find comment with id: " + commentId));
@@ -30,11 +32,13 @@ public class CommentService {
         return createDisplayResponseFromEntity(comment);
     }
 
+    @Override
     public long saveComment(CommentSaveRequest saveCommentRequest, String username) {
         Comment newComment = createEntityFromSaveRequest(saveCommentRequest, username);
         return commentRepository.save(newComment).getId();
     }
 
+    @Override
     public void deleteComment(long commentId) {
         Comment commentToRemove = commentRepository.findById(commentId)
                 .orElseThrow(() -> new CommentNotFoundException("Could not find comment with id: " + commentId));
@@ -42,6 +46,7 @@ public class CommentService {
         commentRepository.delete(commentToRemove);
     }
 
+    @Override
     public void editComment(long commentId, CommentEditRequest commentEditRequest) {
         Comment commentToEdit = commentRepository.findById(commentId)
                 .orElseThrow(() -> new CommentNotFoundException("Could not find comment with id: " + commentId));

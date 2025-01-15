@@ -1,19 +1,26 @@
-<mat-card
-  class="comment-card"
-  appearance="raised"
->
+<mat-card class="comment-card" appearance="raised">
   <mat-card-header class="flex justify-between items-center">
     <mat-card-subtitle>{{ comment.author }}</mat-card-subtitle>
-    @if (comment.author === this.authService.getCurrentUser()!.name) {
-      <button mat-mini-fab (click)="handleDeleteComment()">
-        <mat-icon>delete</mat-icon>
-      </button>
+    @if (comment.author === authService.getCurrentUser()?.name) {
+      <div>
+        <button mat-mini-fab (click)="handleEditComment()">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-mini-fab (click)="handleDeleteComment()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
     }
   </mat-card-header>
   <mat-card-content>
-    <p>
-      {{ comment.comment }}
-    </p>
+    @if (isEditing) {
+      <textarea [(ngModel)]="editedCommentText" rows="3" class="w-full"></textarea>
+      <div class="flex justify-end gap-2 mt-2">
+        <button mat-button color="primary" (click)="saveEditComment()">Save</button>
+        <button mat-button (click)="cancelEditComment()">Cancel</button>
+      </div>
+    } @else {
+      <p>{{ comment.comment }}</p>
+    }
   </mat-card-content>
 </mat-card>
-  

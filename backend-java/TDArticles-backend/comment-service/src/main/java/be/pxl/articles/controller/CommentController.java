@@ -3,7 +3,7 @@ package be.pxl.articles.controller;
 import be.pxl.articles.controller.request.CommentEditRequest;
 import be.pxl.articles.controller.request.CommentSaveRequest;
 import be.pxl.articles.controller.response.CommentDisplayResponse;
-import be.pxl.articles.service.CommentService;
+import be.pxl.articles.service.ICommentService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class CommentController {
-    private final CommentService commentService;
+    private final ICommentService commentService;
 
     @ModelAttribute
     public void addAttributes(@RequestHeader("Username") String username) {

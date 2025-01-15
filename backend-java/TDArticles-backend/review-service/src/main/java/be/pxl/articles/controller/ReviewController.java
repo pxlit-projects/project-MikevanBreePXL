@@ -3,7 +3,7 @@ package be.pxl.articles.controller;
 import be.pxl.articles.controller.request.ReviewRequest;
 import be.pxl.articles.controller.response.ArticleResponse;
 import be.pxl.articles.controller.response.ReviewResponse;
-import be.pxl.articles.service.ReviewService;
+import be.pxl.articles.service.IReviewService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class ReviewController {
-    private final ReviewService reviewService;
+    private final IReviewService reviewService;
 
     @GetMapping
     public List<ArticleResponse> getPendingReviews(@NotNull @RequestHeader("Username") String username) {

@@ -34,6 +34,12 @@ export class CommentService {
       { headers }
     ).subscribe();
   }
+
+  editComment(commentId: number, comment: string): Observable<object> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Username', this.authService.getCurrentUser()!.name);
+    return this.http.put(`${environment.apiCommentUrl}${commentId}`, { comment }, { headers });
+  }
   
   deleteComment(commentId: number): Observable<object> {
     let headers = new HttpHeaders();

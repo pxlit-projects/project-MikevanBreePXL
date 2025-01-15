@@ -4,6 +4,7 @@ import { AuthService } from '../../auth/services/auth.service';
 import { Client, Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { ReviewNotification } from '../../../shared/models/review-notification.model';
+import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class WebSocketService implements OnDestroy {
   }
 
   private initializeWebSocket(): void {
-    const socket = new SockJS('http://localhost:8089/notification-ws/ws');
+    const socket = new SockJS(environment.apiGatewayUrl + 'notification-ws/ws');
     this.stompClient = Stomp.over(socket);
 
     this.stompClient.onConnect = () => {

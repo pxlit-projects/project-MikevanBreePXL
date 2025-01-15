@@ -61,6 +61,11 @@ export class ReadArticleComponent implements OnInit {
     this.commentService.sendComment(this.articleId, $event)
       .add(() => this.fetchComments());
   }
+
+  onEditComment(commentId: number, newCommentText: string) {
+    this.commentService.editComment(commentId, newCommentText)
+      .subscribe(() => this.fetchComments());
+  }
   
   onDeleteComment(commentId: number) {
     this.commentService.deleteComment(commentId).subscribe()

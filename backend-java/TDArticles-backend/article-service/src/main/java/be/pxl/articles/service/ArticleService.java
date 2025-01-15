@@ -7,6 +7,7 @@ import be.pxl.articles.controller.response.ArticleResponse;
 import be.pxl.articles.domain.Status;
 import be.pxl.articles.exceptions.ArticleAlreadyPublishedException;
 import be.pxl.articles.exceptions.ArticleNotFoundException;
+import be.pxl.articles.exceptions.ArticleNotReadyException;
 import be.pxl.articles.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -82,6 +83,11 @@ public class ArticleService implements IArticleService {
     @Override
     public void publishReview(long id, boolean approved) {
         Article article = articleRepository.findById(id).orElseThrow(() -> new ArticleNotFoundException("Could not find article with id " + id));
+
+        if (!article.getStatus().equals(Status.PENDING)) {
+            throw new ArticleNotReadyException("Article is not pending for review!");
+        }
+
         if (approved) {
             article.setStatus(Status.READY_TO_PUBLISH);
         } else {
@@ -132,21 +138,6 @@ public class ArticleService implements IArticleService {
                 .toList();
     }
 
-    public List<ArticleResponse> getDeniedArticles(String author) {
-        return articleRepository.findAllByAuthor(author).stream()
-                .filter(article -> article.getStatus().equals(Status.DENIED))
-                .map(article -> mapToArticleResponse(article))
-                .toList();
-    }
-
-    @Override
-    public List<ArticleResponse> getArticlesByAuthor(String author) {
-        return articleRepository.findAllByAuthor(author)
-                .stream()
-                .map(article -> mapToArticleResponse(article))
-                .toList();
-    }
-
     @Override
     public long createArticle(CreateArticleRequest request) {
         Article.ArticleBuilder newArticle = Article.builder()
@@ -160,7 +151,7 @@ public class ArticleService implements IArticleService {
         } else {
             newArticle.status(Status.PENDING);
         }
-
+        
         return articleRepository.save(newArticle.build()).getId();
     }
 

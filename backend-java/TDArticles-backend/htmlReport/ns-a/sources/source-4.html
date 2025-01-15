@@ -1,0 +1,202 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ReviewService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">be.pxl.articles.service</a>
+</div>
+
+<h1>Coverage Summary for Class: ReviewService (be.pxl.articles.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ReviewService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (2/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93.8%
+  </span>
+  <span class="absValue">
+    (30/32)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package be.pxl.articles.service;
+&nbsp;
+&nbsp;import be.pxl.articles.client.ArticleClient;
+&nbsp;import be.pxl.articles.controller.request.ReviewRequest;
+&nbsp;import be.pxl.articles.controller.response.ArticleResponse;
+&nbsp;import be.pxl.articles.controller.request.NotificationRequest;
+&nbsp;import be.pxl.articles.controller.response.ReviewResponse;
+&nbsp;import be.pxl.articles.domain.Review;
+&nbsp;import be.pxl.articles.exception.ReviewNotFoundException;
+&nbsp;import be.pxl.articles.repository.ReviewRepository;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import org.springframework.amqp.rabbit.core.RabbitTemplate;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Service
+&nbsp;@RequiredArgsConstructor
+&nbsp;public class ReviewService implements IReviewService {
+&nbsp;    private final ReviewRepository reviewRepository;
+&nbsp;    private final ArticleClient articleClient;
+&nbsp;    private final RabbitTemplate rabbitTemplate;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public List&lt;ArticleResponse&gt; getPendingArticles(String username) {
+<b class="fc">&nbsp;        return articleClient.getPendingArticles(username)</b>
+<b class="fc">&nbsp;                .stream()</b>
+<b class="fc">&nbsp;                .toList();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public ReviewResponse getReviewByArticleId(Long articleId) {
+<b class="fc">&nbsp;        return mapToReviewResponse(reviewRepository.findAllByArticleId(articleId).stream().findFirst()</b>
+<b class="fc">&nbsp;                .orElseThrow(() -&gt; new ReviewNotFoundException(&quot;Review with article id &quot; + articleId + &quot; not found&quot;)));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Long postReview(Long articleId, ReviewRequest reviewRequest, String username) {
+<b class="fc">&nbsp;        Review review = mapToEntity(articleId, reviewRequest);</b>
+&nbsp;
+<b class="fc">&nbsp;        articleClient.publishReview(articleId, username, reviewRequest.isApproved());</b>
+<b class="fc">&nbsp;        sendNotification(articleId, reviewRequest, username);</b>
+&nbsp;
+<b class="fc">&nbsp;        return reviewRepository.save(review).getId();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private ReviewResponse mapToReviewResponse(Review review) {
+<b class="fc">&nbsp;        return ReviewResponse.builder()</b>
+<b class="fc">&nbsp;                .id(review.getId())</b>
+<b class="fc">&nbsp;                .articleId(review.getArticleId())</b>
+<b class="fc">&nbsp;                .approved(review.isApproved())</b>
+<b class="fc">&nbsp;                .rejectionNotes(review.getRejectionNotes())</b>
+<b class="fc">&nbsp;                .build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private Review mapToEntity(Long articleId, ReviewRequest reviewRequest) {
+<b class="fc">&nbsp;        var reviewBuilder = Review.builder()</b>
+<b class="fc">&nbsp;                .articleId(articleId)</b>
+<b class="fc">&nbsp;                .approved(reviewRequest.isApproved())</b>
+<b class="fc">&nbsp;                .rejectionNotes(reviewRequest.getRejectionNotes());</b>
+&nbsp;
+<b class="fc">&nbsp;        return reviewBuilder.build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void sendNotification(Long articleId, ReviewRequest reviewRequest, String reviewer) {
+<b class="fc">&nbsp;        var notificationRequest = NotificationRequest.builder()</b>
+<b class="fc">&nbsp;                .sender(reviewer)</b>
+<b class="fc">&nbsp;                .receiver(reviewRequest.getReceiver());</b>
+&nbsp;
+<b class="fc">&nbsp;        StringBuilder message = new StringBuilder(&quot;Review &quot;);</b>
+<b class="pc">&nbsp;        if (reviewRequest.isApproved()) {</b>
+<b class="fc">&nbsp;            message.append(&quot;approved&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            message.append(&quot;rejected&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        message.append(&quot; for article #&quot;).append(articleId);</b>
+<b class="pc">&nbsp;        if (!reviewRequest.isApproved()) {</b>
+<b class="nc">&nbsp;            message.append(&quot;\n\nNotes:\n&quot;).append(reviewRequest.getRejectionNotes());</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        notificationRequest.message(message.toString());</b>
+&nbsp;
+<b class="fc">&nbsp;        rabbitTemplate.convertAndSend(&quot;NotificationsQueue&quot;, notificationRequest.build());</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-01-15 04:00</div>
+</div>
+</body>
+</html>
